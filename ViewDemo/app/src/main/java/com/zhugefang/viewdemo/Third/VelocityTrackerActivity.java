@@ -22,6 +22,11 @@ public class VelocityTrackerActivity extends BaseActivity {
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        Log.d(TAG, "dispatchTouchEvent: ");
+        return super.dispatchTouchEvent(ev);
+    }
+    @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (tracker == null) {
             tracker = VelocityTracker.obtain();

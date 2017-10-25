@@ -1,0 +1,130 @@
+
+DispatchViewActivity的笔记
+点击Button:
+10-25 16:00:50.155 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=0 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ........ 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:00:50.269 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=1 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:00:50.270 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnClickListener--onClick--android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+点击Button以外的空白：
+10-25 16:03:28.405 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=0 --android.widget.RelativeLayout{f45fc93 V.E...C.. ........ 0,0-1080,1711 #7f0b0059 app:id/activity_dispatch_view}
+10-25 16:03:28.594 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=1 --android.widget.RelativeLayout{f45fc93 V.E...C.. ...P.... 0,0-1080,1711 #7f0b0059 app:id/activity_dispatch_view}
+10-25 16:03:28.595 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnClickListener--onClick--android.widget.RelativeLayout{f45fc93 V.E...C.. ...P.... 0,0-1080,1711 #7f0b0059 app:id/activity_dispatch_view}
+点击Button,稍微带有一点儿滑动
+10-25 16:04:19.579 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=0 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ........ 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:19.687 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=2 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:19.703 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=2 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:19.720 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=2 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:19.885 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=2 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:20.732 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=2 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:20.738 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=1 --android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:04:20.738 10041-10041/com.zhugefang.viewdemo I/DispatchViewActivity: OnClickListener--onClick--android.support.v7.widget.AppCompatButton{2a46664 VFED..C.. ...P.... 44,44-1036,176 #7f0b0058 app:id/btn}
+onTouch---->return true
+10-25 16:15:47.628 11466-11466/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=0 --android.support.v7.widget.AppCompatButton{c8a40cd VFED..C.. ........ 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:15:47.750 11466-11466/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=2 --android.support.v7.widget.AppCompatButton{c8a40cd VFED..C.. ........ 44,44-1036,176 #7f0b0058 app:id/btn}
+10-25 16:15:47.751 11466-11466/com.zhugefang.viewdemo I/DispatchViewActivity: OnTouchListener--onTouch-- action=1 --android.support.v7.widget.AppCompatButton{c8a40cd VFED..C.. ........ 44,44-1036,176 #7f0b0058 app:id/btn}
+
+
+第一阶段总结：
+onTouch(View v, MotionEvent event) /onClick(View v)
+1、从参数看，onTouch多了一个MotionEvent，onTouch比onClick强大灵活；这样在onTouch里就能处理ACtion_DOWN、action_move、action_down
+等等各种触摸事件，当我们点击Button的时候，会吧各种MotionEvent处理完了，最后调用onclick()，即
+android控件的Listener事件触发顺序是先触发OnTouchListener,其次是onClickListener
+因为onTouch()在dispatchTouchEvent(MotionEvent event) {
+    //noinspection SimplifiableIfStatement
+            ListenerInfo li = mListenerInfo;
+            if (li != null && li.mOnTouchListener != null
+                    && (mViewFlags & ENABLED_MASK) == ENABLED
+                    && li.mOnTouchListener.onTouch(this, event)) {
+                result = true;
+            }
+            if (!result && onTouchEvent(event)) {
+                            result = true;
+                        }
+                        return result;
+}
+
+
+2、如果控件的onTouch中返回了true,将阻止事件继续传递，即onclick（）方法不会走，返回false事件就会继续传递
+第二阶段：
+源码
+dispatchTouchEvent(MotionEvent event) {
+    //noinspection SimplifiableIfStatement
+            ListenerInfo li = mListenerInfo;
+            if (li != null && li.mOnTouchListener != null
+                    && (mViewFlags & ENABLED_MASK) == ENABLED
+                    && li.mOnTouchListener.onTouch(this, event)) {
+                result = true;
+            }
+            if (!result && onTouchEvent(event)) {
+                            result = true;
+                        }
+                        return result;
+}
+总结：
+在View的触摸屏传递机制中，通过dispatchTouchEvent方法源码我们会得到如下的结论：
+1、触摸控件（View),首先会执行dispatchTouchEvent();
+2、在dispatchTouchEvent()中先执行onTouch（）--->onTouchEvent()(如果onTouch()返回为false,才会走到onTouchEvent(),onClick()是在onTouchEvent()中的action_up中执行)
+3、如果控件（View)的    onTouch()返回返回为false 或者 li.mOnTouchListener == null(没有setonTouchListener())
+或者 (mViewFlags & ENABLED_MASK) != ENABLED （控件不是enable），调用ontouchEvent()
+,dispatchTouchEvent()与onTouchEvent()的返回值是一样的
+4、如果控件不是enable的，设置了setOnTouchListener，ontouch()也不会执行（ && 具有短路功能，有一个是false,后面的就不比较了），
+只能重写控件的onTouchEvent()方法处理，dispatchEvent()的返回值和onTouchEvent()返回一样
+5、如果控件（View）是enable的，并且onTouch返回为ture,dispatchTouchEvent()直接返回了True,不会调用onTouchEvent()方法。
+第三阶段：
+ public boolean onTouchEvent(MotionEvent event) {
+      if ((viewFlags & ENABLED_MASK) == DISABLED) {
+             if (action == MotionEvent.ACTION_UP && (mPrivateFlags & PFLAG_PRESSED) != 0) {
+                 setPressed(false);
+             }
+             // A disabled view that is clickable still consumes the touch
+             // events, it just doesn't respond to them.
+             return (((viewFlags & CLICKABLE) == CLICKABLE
+                     || (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE)
+                     || (viewFlags & CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE);
+         }
+            if (((viewFlags & CLICKABLE) == CLICKABLE ||
+                         (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE) ||
+                         (viewFlags & CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) {
+                     switch (action) {
+                      case MotionEvent.ACTION_UP:
+                                         boolean prepressed = (mPrivateFlags & PFLAG_PREPRESSED) != 0;
+                                         if ((mPrivateFlags & PFLAG_PRESSED) != 0 || prepressed) {
+                                             // take focus if we don't have it already and we should in
+                                             // touch mode.
+                                             boolean focusTaken = false;
+                                             if (isFocusable() && isFocusableInTouchMode() && !isFocused()) {
+                                                 focusTaken = requestFocus();
+                                             }
+
+                                             if (prepressed) {
+                                                 // The button is being released before we actually
+                                                 // showed it as pressed.  Make it show the pressed
+                                                 // state now (before scheduling the click) to ensure
+                                                 // the user sees it.
+                                                 setPressed(true, x, y);
+                                            }
+
+                                             if (!mHasPerformedLongPress && !mIgnoreNextUpEvent) {
+                                                 // This is a tap, so remove the longpress check
+                                                 removeLongPressCallback();
+
+                                                 // Only perform take click actions if we were in the pressed state
+                                                 if (!focusTaken) {
+                                                     // Use a Runnable and post this rather than calling
+                                                     // performClick directly. This lets other visual state
+                                                     // of the view update before click actions start.
+                                                     if (mPerformClick == null) {
+                                                         mPerformClick = new PerformClick();
+                                                     }
+                                                     if (!post(mPerformClick)) {
+                                                         performClick();
+                                                     }
+                                                 }
+                                             }
+ }
+
+ 总结：
+ onTouchEvent()中：
+ 1、view是disenable状态，如果是clickable,直接返回true,如果是disclickable,直接返回false;就是所谓的直接消费，不做回应
+ 2、view 是enable状态，onTouchEvent()会在action_up分支中触发onClick()监听
+ 3、当dispatchTouchEvent()在进行分发机制的时候，只有前一action返回为true了，
+ 才会触发下一action,指的的是ACtion_down\action_move\action_up,只有有一个返回了false,后续的事件该view

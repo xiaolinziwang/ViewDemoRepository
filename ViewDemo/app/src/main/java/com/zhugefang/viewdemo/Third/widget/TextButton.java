@@ -12,6 +12,7 @@ import android.widget.Button;
 
 public class TextButton extends Button {
     private String TAG = "test";
+
     public TextButton(Context context) {
         super(context);
     }
@@ -26,13 +27,16 @@ public class TextButton extends Button {
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        Log.i(TAG, "TestButton--dispatchTouchEvent--action="+event.getAction());
-        return super.dispatchTouchEvent(event);
+        Log.i(TAG, "TestButton--dispatchTouchEvent--action=" + event.getAction());
+        super.dispatchTouchEvent(event);
+        return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG, "TestButton--onTouchEvent--action="+event.getAction());
+        Log.i(TAG, "TestButton--onTouchEvent--action=" + event.getAction());
+//        return super.onTouchEvent(event);
+        super.onTouchEvent(event);
         return false;
     }
 

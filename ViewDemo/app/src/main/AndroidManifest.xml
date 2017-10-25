@@ -9,11 +9,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
-        <activity android:name=".Third.VelocityTrackerActivity"></activity>
-        <activity android:name=".Third.GestureDetectorActivity">
+        <activity android:name=".Third.VelocityTrackerActivity" />
+        <activity android:name=".Third.GestureDetectorActivity"></activity>
+        <activity android:name=".Third.ScrollerActivity">
 
         </activity>
-        <activity android:name=".Third.ScrollerActivity">
+        <activity android:name=".Third.ScrollerLayoutActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

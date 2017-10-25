@@ -1,0 +1,60 @@
+
+
+
+if(gestureDetector = new GestureDetector(new GestrueListener()))
+  if(view.setClickable(true)||view.setLongClickable(true)){
+//单击
+10-18 17:00:09.563 2192-2192/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 17:00:09.650 2192-2192/com.zhugefang.viewdemo D/GestureDetectorActivity: onSingleTapUp:
+//双击
+10-18 17:00:47.652 2192-2192/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 17:00:47.701 2192-2192/com.zhugefang.viewdemo D/GestureDetectorActivity: onSingleTapUp:
+10-18 17:00:47.791 2192-2192/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 17:00:47.829 2192-2192/com.zhugefang.viewdemo D/GestureDetectorActivity: onSingleTapUp:
+if(gestureDetector.setOnDoubleTapListener(new DoubleListener()){
+双击触发：
+  D/GestureDetectorActivity: onDown:
+  D/GestureDetectorActivity: onSingleTapUp:
+  D/GestureDetectorActivity: onDoubleTap:
+  D/GestureDetectorActivity: onDoubleTapEvent:
+  D/GestureDetectorActivity: onDown:
+  D/GestureDetectorActivity: onDoubleTapEvent:
+  D/GestureDetectorActivity: onDoubleTapEvent:
+单击：
+10-18 16:48:51.872 21840-21840/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 16:48:51.967 21840-21840/com.zhugefang.viewdemo D/GestureDetectorActivity: onShowPress:
+10-18 16:48:51.980 21840-21840/com.zhugefang.viewdemo D/GestureDetectorActivity: onSingleTapUp:
+10-18 16:48:52.172 21840-21840/com.zhugefang.viewdemo D/GestureDetectorActivity: onSingleTapConfirmed:
+
+}
+}else{//没有设置点击事件
+//单击屏幕
+10-18 16:57:49.524 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 16:57:49.621 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onShowPress:
+10-18 16:57:50.121 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onLongPress:
+//双击屏幕
+10-18 16:59:07.402 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 16:59:07.499 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onShowPress:
+10-18 16:59:07.554 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 16:59:07.649 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onShowPress:
+10-18 16:59:08.150 26481-26481/com.zhugefang.viewdemo D/GestureDetectorActivity: onLongPress:
+//拖动
+10-18 17:25:47.340 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 17:25:47.413 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll:
+10-18 17:25:47.422 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll: distanceX:-37.874817,distanceY:6.48761
+10-18 17:25:47.431 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll:
+10-18 17:25:47.435 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll: distanceX:-19.932678,distanceY:0.50878906
+10-18 17:25:47.446 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll:
+10-18 17:25:47.451 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll: distanceX:-19.807404,distanceY:0.9994507
+//快速滑动
+10-18 17:31:10.312 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onDown:
+10-18 17:31:10.355 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll:
+10-18 17:31:10.358 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll: distanceX:-43.43509,distanceY:10.416016
+10-18 17:31:10.377 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll:
+10-18 17:31:10.381 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll: distanceX:-294.51773,distanceY:14.710327
+10-18 17:31:10.387 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll:
+10-18 17:31:10.389 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onScroll: distanceX:-31.704895,distanceY:-2.1383057
+10-18 17:31:10.392 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onFling:
+10-18 17:31:10.396 25736-25736/com.zhugefang.viewdemo D/GestureDetectorActivity: onFling: velocityX:8000.0,velocityY:-381.80225
+}
+}

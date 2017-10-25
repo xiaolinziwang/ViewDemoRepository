@@ -10,18 +10,24 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" />
         <activity android:name=".Third.VelocityTrackerActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Third.GestureDetectorActivity"></activity>
         <activity android:name=".Third.ScrollerActivity">
 
         </activity>
-        <activity android:name=".Third.ScrollerLayoutActivity">
+        <activity android:name=".Third.ScrollerLayoutActivity"/>
 
+        <activity android:name=".Third.DispatchActivity"></activity>
+        <activity android:name=".Third.DispatchViewActivity">
+
+        </activity>
+        <activity android:name=".Third.widget.DispatchView2Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

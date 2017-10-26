@@ -14,6 +14,7 @@ import com.zhugefang.viewdemo.Third.widget.TextLinearLayout;
 * ACTION_MOVE             = 2;
 * ACTION_CANCEL           = 3;
 * http://blog.csdn.net/yanbober/article/details/45932123
+* Android触摸屏事件派发机制详解与源码分析二(Activity篇)
 * */
 public class DispatchActivity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
     private String TAG = "test";

@@ -1,0 +1,34 @@
+ * http://blog.csdn.net/yanbober/article/details/45912661
+ viewGroup篇
+ 情况1：默认
+点击button:父容器的onInterceptTouchEvent每一个action都会走，因为父容器拦截的是子view
+10-26 12:13:02.333 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--dispatchTouchEvent--action=0
+10-26 12:13:02.334 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--onInterceptTouchEvent--action=0
+10-26 12:13:02.334 29868-29868/com.zhugefang.viewdemo I/test: TestButton--dispatchTouchEvent--action=0
+10-26 12:13:02.334 29868-29868/com.zhugefang.viewdemo I/test: OnTouchListener--onTouch-- action=0 --com.zhugefang.viewdemo.Third.widget.TextButton{2a46664 VFED..C.. ........ 28,28-1052,160 #7f0b0058 app:id/btn}
+10-26 12:13:02.334 29868-29868/com.zhugefang.viewdemo I/test: TestButton--onTouchEvent--action=0
+10-26 12:13:02.439 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--dispatchTouchEvent--action=1
+10-26 12:13:02.439 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--onInterceptTouchEvent--action=1
+10-26 12:13:02.439 29868-29868/com.zhugefang.viewdemo I/test: TestButton--dispatchTouchEvent--action=1
+10-26 12:13:02.439 29868-29868/com.zhugefang.viewdemo I/test: OnTouchListener--onTouch-- action=1 --com.zhugefang.viewdemo.Third.widget.TextButton{2a46664 VFED..C.. ...P.... 28,28-1052,160 #7f0b0058 app:id/btn}
+10-26 12:13:02.439 29868-29868/com.zhugefang.viewdemo I/test: TestButton--onTouchEvent--action=1
+10-26 12:13:02.449 29868-29868/com.zhugefang.viewdemo I/test: OnClickListener--onClick--com.zhugefang.viewdemo.Third.widget.TextButton{2a46664 VFED..C.. ...P.... 28,28-1052,160 #7f0b0058 app:id/btn}
+
+点击button以为的地方：父容器的onInterceptTouchEvent只走一次，因为TestLinearLayout的dispatchTouchevent和onTouchEvent（）
+的返回值是一样的，返回了true,则下一个action事件时，onInterceptTouchEvent不再走
+10-26 12:25:55.593 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--dispatchTouchEvent--action=0
+10-26 12:25:55.594 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--onInterceptTouchEvent--action=0
+10-26 12:25:55.594 29868-29868/com.zhugefang.viewdemo I/test: OnTouchListener--onTouch-- action=0 --com.zhugefang.viewdemo.Third.widget.TextLinearLayout{f45fc93 V.E...C.. ........ 0,0-1080,1711 #7f0b0057 app:id/layout}
+10-26 12:25:55.594 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--onTouchEvent--action=0
+10-26 12:25:55.641 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--dispatchTouchEvent--action=1
+10-26 12:25:55.641 29868-29868/com.zhugefang.viewdemo I/test: OnTouchListener--onTouch-- action=1 --com.zhugefang.viewdemo.Third.widget.TextLinearLayout{f45fc93 V.E...C.. ...P.... 0,0-1080,1711 #7f0b0057 app:id/layout}
+10-26 12:25:55.641 29868-29868/com.zhugefang.viewdemo I/test: TestLinearLayout--onTouchEvent--action=1
+10-26 12:25:55.642 29868-29868/com.zhugefang.viewdemo I/test: OnClickListener--onClick--com.zhugefang.viewdemo.Third.widget.TextLinearLayout{f45fc93 V.E...C.. ...P.... 0,0-1080,1711 #7f0b0057 app:id/layout}
+
+ViewGroup触摸屏事件传递总结:
+1、Android事件派发是先传递到最顶级的ViewGroup,再由ViewGroup递归传递到view
+2、在viewGroup中通过onInterceptTouchEvent()方法对事件进行传递，onIntercepterTouchEvent()返回true,代表不允许事件继续向子view传递;
+返回false,代表不对事件进行拦截，默认返回false
+3、子view如果将传递的事件消费，viewGroup将无法接受任何事件
+4、Down方式通过dispatchTouchEvent分发，分发的目的是为了找到真正需要处理完整Touch请求的View。当某个View或者ViewGroup的onTouchEvent事件返回true时，
+便表示它是真正要处理这次请求的View，之后的Aciton_UP和Action_MOVE将由它处理。

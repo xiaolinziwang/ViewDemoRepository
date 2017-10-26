@@ -1,4 +1,4 @@
-package com.zhugefang.viewdemo.Third.widget;
+package com.zhugefang.viewdemo.Third;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,8 +6,11 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.zhugefang.viewdemo.R;
-import com.zhugefang.viewdemo.Third.BaseActivity;
-
+import com.zhugefang.viewdemo.Third.widget.TextButton;
+/**
+ *http://blog.csdn.net/yanbober/article/details/45887547
+ *  Android触摸屏事件派发机制详解与源码分析二(view篇)
+ */
 public class DispatchView2Activity extends BaseActivity implements View.OnClickListener, View.OnTouchListener {
     private String TAG = "test";
     private View layout;

@@ -28,16 +28,15 @@ public class TextButton extends Button {
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         Log.i(TAG, "TestButton--dispatchTouchEvent--action=" + event.getAction());
-        super.dispatchTouchEvent(event);
-        return true;
+        return super.dispatchTouchEvent(event);
+//        return true;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.i(TAG, "TestButton--onTouchEvent--action=" + event.getAction());
 //        return super.onTouchEvent(event);
-        super.onTouchEvent(event);
-        return false;
+        return super.onTouchEvent(event);
     }
 
 }

@@ -11,6 +11,7 @@ import com.zhugefang.viewdemo.R;
 
 /**
  *http://blog.csdn.net/yanbober/article/details/45887547
+ *  Android触摸屏事件派发机制详解与源码分析二(view篇)
  */
 public class DispatchViewActivity extends BaseActivity implements View.OnTouchListener, View.OnClickListener {
 

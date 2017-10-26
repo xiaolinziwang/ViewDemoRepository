@@ -39,6 +39,6 @@ public class TextLinearLayout extends LinearLayout {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Log.i(TAG, "TestLinearLayout--onTouchEvent--action="+event.getAction());
-        return false;
+        return super.onTouchEvent(event);
     }
 }

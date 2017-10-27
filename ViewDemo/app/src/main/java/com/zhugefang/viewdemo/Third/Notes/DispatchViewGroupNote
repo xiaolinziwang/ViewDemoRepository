@@ -32,3 +32,20 @@ ViewGroup触摸屏事件传递总结:
 3、子view如果将传递的事件消费，viewGroup将无法接受任何事件
 4、Down方式通过dispatchTouchEvent分发，分发的目的是为了找到真正需要处理完整Touch请求的View。当某个View或者ViewGroup的onTouchEvent事件返回true时，
 便表示它是真正要处理这次请求的View，之后的Aciton_UP和Action_MOVE将由它处理。
+
+
+局部分析：
+     if (!canceled && !intercepted) {//没有取消并且也没有被拦截
+
+
+     }
+     dispatchTransformedTouchEvent如果child为空，返回的值就是viewgroup的 super.dispatchTouchEvent(event);否则child不为空，
+     返回值就是 child.dispatchTouchEvent(event);
+private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,View child, int desiredPointerIdBits) {
+     if(child==null){
+     handled=super.dispatchTouchEvent(event);
+     }else{
+      handled=child.dispatchTouchEvent(event);
+     }
+     return handled;
+}

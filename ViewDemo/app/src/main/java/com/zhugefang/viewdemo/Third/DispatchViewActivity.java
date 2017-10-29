@@ -39,8 +39,9 @@ public class DispatchViewActivity extends BaseActivity implements View.OnTouchLi
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         Log.i(TAG, "OnTouchListener--onTouch-- action=" + event.getAction() + " --" + v);
-        return true;
+        return false;
     }
+
 
     @Override
     public void onClick(View v) {

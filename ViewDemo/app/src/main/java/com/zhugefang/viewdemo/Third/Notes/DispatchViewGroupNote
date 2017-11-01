@@ -27,13 +27,16 @@
 
 ViewGroup触摸屏事件传递总结:
 1、Android事件派发是先传递到最顶级的ViewGroup,再由ViewGroup递归传递到view
-2、在viewGroup中通过onInterceptTouchEvent()方法对事件进行传递，onIntercepterTouchEvent()返回true,代表不允许事件继续向子view传递;
+2、在viewGroup中通过onInterceptTouchEvent()方法对事件进行拦截，onIntercepterTouchEvent()返回true,代表不允许事件继续向子view传递，
+影响的是mFirsetTouchTarget是否为空， if (!canceled && !intercepted) {.....}方法体里面会对mFirsetTouchTarget进行赋值，为空，分2种情况：
+2-1：VIewGroup没有子元素
+2-2：子元素处理了点击事件，但是dispatchTouchEvent中返回了false,这一般是onTouchEvent中返回了false;
 返回false,代表不对事件进行拦截，默认返回false
 3、子view如果将传递的事件消费，viewGroup将无法接受任何事件
-4、Down方式通过dispatchTouchEvent分发，分发的目的是为了找到真正需要处理完整Touch请求的View。当某个View或者ViewGroup的onTouchEvent事件返回true时，
+4、Down方式通过dispatchTouchEvent分发，分发的目的是为了找到真正需要处理完整Touch请求的View。
+当某个View或者ViewGroup的onTouchEvent事件返回true时，
 便表示它是真正要处理这次请求的View，之后的Aciton_UP和Action_MOVE将由它处理。
-
-
+5、只要触摸了任何控件，就一定会调用dispatchTouchEvent();
 局部分析：
      if (!canceled && !intercepted) {//没有取消并且也没有被拦截
 
@@ -49,3 +52,22 @@ private boolean dispatchTransformedTouchEvent(MotionEvent event, boolean cancel,
      }
      return handled;
 }
+//自己构思：
+if(dispatchTransformedTouchEvent(ev, false, child, idBitsToAssign)){//true,表示孩子处理了这个事件,然后进行一些赋值
+ newTouchTarget = addTouchTarget(child, idBitsToAssign);
+   alreadyDispatchedToNewTouchTarget = true;
+}
+  /**
+     * Adds a touch target for specified child to the beginning of the list.
+     * Assumes the target child is not already present.
+     */
+    private TouchTarget addTouchTarget(@NonNull View child, int pointerIdBits) {
+        final TouchTarget target = TouchTarget.obtain(child, pointerIdBits);
+        target.next = mFirstTouchTarget;
+        mFirstTouchTarget = target;
+        return target;
+    }
+
+
+
+

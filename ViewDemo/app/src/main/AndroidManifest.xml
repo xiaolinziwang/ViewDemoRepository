@@ -13,6 +13,7 @@
         <activity android:name=".Third.GestureDetectorActivity" />
         <activity android:name=".Third.ScrollerActivity" />
         <activity android:name=".Third.ScrollerLayoutActivity" />
+
         <activity android:name=".Third.DispatchActivity" />
         <activity android:name=".Third.DispatchViewActivity" />
         <activity android:name=".Third.DispatchView2Activity" />
@@ -21,19 +22,19 @@
             android:label="ViewGroup">
 
         </activity>
-        <activity android:name=".First.LoadModeActivity"
-            android:taskAffinity="com.ryg.task1"
-            android:launchMode="singleTask">
+        <activity
+            android:name=".First.LoadModeActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.ryg.task1">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".First.SecondActivity"/>
-        <activity android:name=".First.ThirdActivity"
-            />
+        <activity android:name=".First.SecondActivity" />
+        <activity android:name=".First.ThirdActivity" />
 
+        <activity android:name=".Third.OuerIntercepetActivity"></activity>
     </application>
 
 </manifest>

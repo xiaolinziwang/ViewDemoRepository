@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.zhugefang.viewdemo.R;
 import com.zhugefang.viewdemo.Third.widget.TextButton;
@@ -17,7 +18,6 @@ public class DispatchViewGroupActivity extends BaseActivity implements View.OnCl
 
     private TextLinearLayout layout;
     private TextButton btn;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

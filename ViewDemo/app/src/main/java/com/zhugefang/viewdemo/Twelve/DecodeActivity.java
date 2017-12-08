@@ -10,7 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.LruCache;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.jakewharton.disklrucache.DiskLruCache;
 import com.zhugefang.viewdemo.R;
@@ -23,6 +25,10 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import butterknife.OnClick;
 
 /**
  * 起因：防止内存溢出
@@ -40,57 +46,129 @@ public class DecodeActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private LruCache<String, Bitmap> lruCache;
     private DiskLruCache diskLruCache;
+    private TextView tv_downImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decode);
         imageView = ((ImageView) findViewById(R.id.iv));
+        tv_downImg = ((TextView) findViewById(R.id.tv_down));
         bitmap = decodeSampledBitmapFormResource();
         imageView.setImageBitmap(bitmap);
         //内存缓存
-        int maxMemory = ((int) Runtime.getRuntime().maxMemory());
-        int cacheSize = maxMemory / 8;
-        LruCache<String, Bitmap> lruCache = new LruCache<String, Bitmap>(cacheSize) {
-            @Override
-            protected int sizeOf(String key, Bitmap bitmap) {
-                return bitmap.getByteCount();
-            }
-
-            @Override
-            protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
-                super.entryRemoved(evicted, key, oldValue, newValue);
-            }
-        };
-        lruCache.put("bitmap", bitmap);
-        //硬盘缓存
-        try {
-            File file = getCacheDir(this, "bitmap");
-            if (!file.exists()) {
-                file.mkdirs();
-            }
-            diskLruCache = DiskLruCache.open(file, getAppVersion(), 1, 10l);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        int maxMemory = ((int) Runtime.getRuntime().maxMemory());
+//        int cacheSize = maxMemory / 8;
+//        LruCache<String, Bitmap> lruCache = new LruCache<String, Bitmap>(cacheSize) {
+//            @Override
+//            protected int sizeOf(String key, Bitmap bitmap) {
+//                return bitmap.getByteCount();
+//            }
+//
+//            @Override
+//            protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
+//                super.entryRemoved(evicted, key, oldValue, newValue);
+//            }
+//        };
+//        lruCache.put("bitmap", bitmap);
 
     }
 
+    @OnClick({R.id.tv_down})
+    public void onClick(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //硬盘缓存
+                    try {
+                        File file = getCacheDir(DecodeActivity.this, "bitmap");
+                        if (!file.exists()) {
+                            file.mkdirs();
+                        }
+                        diskLruCache = DiskLruCache.open(file, getAppVersion(), 1, 10l);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String imageUrl = "http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg";
+                    String key = hashKeyForrDisk(imageUrl);
+                    DiskLruCache.Editor editor = diskLruCache.edit(key);
+                    if (editor != null) {
+                        if (downUrlToStream(imageUrl, editor.newOutputStream(0))) {
+                            editor.commit();
+                        }else {
+                            editor.abort();
+                        }
+                    }
+                    diskLruCache.flush();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     public boolean downUrlToStream(String urlString, OutputStream outputStream) {
-        HttpURLConnection urlConnection=null;
-        BufferedOutputStream out=null;
-        BufferedInputStream in=null;
+        HttpURLConnection urlConnection = null;
+        BufferedOutputStream out = null;
+        BufferedInputStream in = null;
         try {
             final URL url = new URL(urlString);
-             urlConnection = (HttpURLConnection) url.openConnection();
-            in=new BufferedInputStream(urlConnection.getInputStream(), 8 * 1024);
-
+            urlConnection = (HttpURLConnection) url.openConnection();
+            in = new BufferedInputStream(urlConnection.getInputStream(), 8 * 1024);
+            out = new BufferedOutputStream(outputStream, 8 * 1024);
+            int b;
+            while ((b = in.read()) != -1) {
+                out.write(b);
+            }
+            return true;
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (urlConnection != null) {
+                urlConnection.disconnect();
+            }
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
+    }
 
+    /*
+    *key是： 缓存文件的文件名，并且必须要和图片的URL是一一对应的
+    * */
+    private String hashKeyForrDisk(String key) {
+        String cacheKey;
+        try {
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(key.getBytes());
+            cacheKey = HexString(md5.digest());
+        } catch (Exception e) {
+            cacheKey = String.valueOf(key.hashCode());
+        }
+        return cacheKey;
+    }
+
+    private String HexString(byte[] bytes) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            String hex = Integer.toHexString(0xff & bytes[i]);
+            if (hex.length() == 1) {
+                builder.append("0");
+            }
+            builder.append(hex);
+        }
+        return builder.toString();
     }
 
     public int getAppVersion() {

@@ -89,5 +89,6 @@ public class Demo {
         //通过list来删，报错，modifiedException,切记通过subList生成子列表后不要再操作原列表
         //list2.subList(0, 1).clear();
         System.out.println("bugfix上修改的");
+        System.out.println("dev上修改的");
     }
 }

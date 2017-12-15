@@ -1,20 +1,17 @@
 package com.zhugefang.viewdemo.Recycleview;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
-
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.zhugefang.viewdemo.R;
-
+import com.zhugefang.viewdemo.Third.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
-public class RecycleviewActivity extends AppCompatActivity {
+public class RecycleviewActivity extends BaseActivity {
     private String TAG = this.getClass().getSimpleName();
     @Bind(R.id.rv)
     RecyclerView rv;
@@ -24,7 +21,6 @@ public class RecycleviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycleview);
         ButterKnife.bind(this);
         Log.d(TAG, "onCreate: 0");
         initData();
@@ -32,6 +28,13 @@ public class RecycleviewActivity extends AppCompatActivity {
         initAdapter();
         Log.d(TAG, "onCreate: 4");
     }
+
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_recycleview;
+    }
+
 
     private void initAdapter() {
 //        LinearLayoutManager layout = new LinearLayoutManager(this);
@@ -61,5 +64,6 @@ public class RecycleviewActivity extends AppCompatActivity {
         }
         Log.d(TAG, "onCreate: 1");
     }
+
 
 }

@@ -1,0 +1,12 @@
+
+Activity:
+startActvity()--->startActivitForResult()-->
+instrumentation:
+execStartActivity(){
+   IApplicationThread whoThread = (IApplicationThread) contextThread;
+  int result = ActivityManagerNative.getDefault()
+                .startActivity(whoThread, who.getBasePackageName(), intent,
+                        intent.resolveTypeIfNeeded(who.getContentResolver()),
+                        token, target != null ? target.mEmbeddedID : null,
+                        requestCode, 0, null, options);
+}

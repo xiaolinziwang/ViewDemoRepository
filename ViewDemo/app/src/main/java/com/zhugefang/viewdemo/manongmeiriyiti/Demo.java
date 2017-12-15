@@ -88,5 +88,6 @@ public class Demo {
         System.out.println(list.equals(list2));//true
         //通过list来删，报错，modifiedException,切记通过subList生成子列表后不要再操作原列表
         //list2.subList(0, 1).clear();
+        System.out.println("bugfix上修改的");
     }
 }

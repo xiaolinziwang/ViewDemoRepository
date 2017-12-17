@@ -181,7 +181,7 @@ public class DecodeActivity extends BaseActivity {
         if (outHeight > reqHeight || outWidth > reqWith) {
             int halfHeight = outHeight / 2;
             int halfWidth = outWidth / 2;
-            while ((halfHeight/simpleSize) >= reqHeight && (halfWidth/simpleSize) >= reqWith) {
+            while ((halfHeight / simpleSize) >= reqHeight && (halfWidth / simpleSize) >= reqWith) {
                 simpleSize *= 2;
             }
         }
@@ -285,10 +285,10 @@ public class DecodeActivity extends BaseActivity {
         String cacheKey;
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
-            md5.update(key.getBytes());
-            cacheKey = HexString(md5.digest());
+            md5.update(key.getBytes());//key.getBytes()长度是60，md5.digest()，随机的-24,110,134，。。。。
+            cacheKey = HexString(md5.digest());//e37775b7868532e0d2986b1ff384c078
         } catch (Exception e) {
-            cacheKey = String.valueOf(key.hashCode());
+            cacheKey = String.valueOf(key.hashCode());////41067621
         }
         return cacheKey;
     }
@@ -297,7 +297,7 @@ public class DecodeActivity extends BaseActivity {
     private String HexString(byte[] bytes) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
-            String hex = Integer.toHexString(0xff & bytes[i]);
+            String hex = Integer.toHexString(0xff & bytes[i]);//e3
             if (hex.length() == 1) {
                 builder.append("0");
             }

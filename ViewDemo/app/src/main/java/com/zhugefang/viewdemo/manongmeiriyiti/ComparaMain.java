@@ -1,6 +1,8 @@
 package com.zhugefang.viewdemo.manongmeiriyiti;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/12/18.
@@ -34,13 +36,13 @@ import java.util.Arrays;
 
 public class ComparaMain {
     public static void main(String[] args) {
-        DoMain d1 = new DoMain("c");
-        DoMain d2 = new DoMain("c");
-        DoMain d3 = new DoMain("b");
-        DoMain d4 = new DoMain("d");
-        System.out.println(d1.compareTo(d2));
-        System.out.println(d1.compareTo(d3));
-        System.out.println(d1.compareTo(d4));
+        //DoMain d1 = new DoMain("c");
+        //DoMain d2 = new DoMain("c");
+        //DoMain d3 = new DoMain("b");
+        //DoMain d4 = new DoMain("d");
+        //System.out.println(d1.compareTo(d2));
+        //System.out.println(d1.compareTo(d3));
+        //System.out.println(d1.compareTo(d4));
         //集合的排序
         //List<DoMain> list = new ArrayList<>();
         //list.add(d1);
@@ -63,16 +65,32 @@ public class ComparaMain {
         //System.out.println(domainComparator.compare(d1,d3));
         //System.out.println(domainComparator.compare(d1,d4));
         //数组的排序
-        DoMain[] doMains = { d1, d2, d3, d4 };
-        System.out.println("排序前");
-        for (DoMain doMain : doMains) {
-            System.out.println(doMain.getString());
-        }
-        //Arrays.sort(doMains);
-        Arrays.sort(doMains, new DomainComparator());
-        System.out.println("排序后");
-        for (DoMain doMain : doMains) {
-            System.out.println(doMain.getString());
+        //DoMain[] doMains = { d1, d2, d3, d4 };
+        //System.out.println("排序前");
+        //for (DoMain doMain : doMains) {
+        //    System.out.println(doMain.getString());
+        //}
+        ////Arrays.sort(doMains);
+        //Arrays.sort(doMains, new DomainComparator());
+        //System.out.println("排序后");
+        //for (DoMain doMain : doMains) {
+        //    System.out.println(doMain.getString());
+        //}
+        //collection
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(0);
+        list.add(9);
+        list.add(8);
+        List<Integer> list1 = new ArrayList<>();
+        list1.add(100);
+        list1.add(200);
+        //Collections.sort(list);//按值大小排序
+        //Collections.reverse(list);//将list顺序倒叙，
+        Collections.fill(list, 100);//将数据全部装成100
+        for (Integer i : list) {
+            System.out.println(i + "");
         }
     }
 }

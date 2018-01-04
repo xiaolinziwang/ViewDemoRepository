@@ -89,7 +89,6 @@ public class ComparaMain {
         //Collections.sort(list);//按值大小排序
         //Collections.reverse(list);//将list顺序倒叙，
         Collections.fill(list, 100);//将数据全部装成100
-        Collections.
         for (Integer i : list) {
             System.out.println(i + "");
         }

@@ -22,12 +22,11 @@
         <activity android:name=".Third.DispatchView2Activity" />
         <activity
             android:name=".Third.DispatchViewGroupActivity"
-            android:label="ViewGroup"></activity>
             android:label="ViewGroup" />
         <activity android:name=".Third.OuerIntercepetActivity" />
         <activity android:name=".First.notes.StartActivity" />
         <activity android:name=".First.notes.Start2Activity" />
-        <activity android:name=".Twelve.DecodeActivity"></activity>
+        <activity android:name=".Twelve.DecodeActivity" />
         <activity android:name=".Twelve.LruActivity" />
         <activity
             android:name=".First.LoadModeActivity"
@@ -39,16 +38,19 @@
             android:name=".Twelve.ImageLoaderActivity"
             android:hardwareAccelerated="true" />
         <activity android:name=".eleven.ThreadActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".Ten.AsyncTaskActivity" />
+        <activity android:name=".Recycleview.RecycleviewActivity">
+        </activity>
+        <activity android:name=".eleven.AsynActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".Ten.AsyncTaskActivity"></activity>
-        <activity android:name=".Recycleview.RecycleviewActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

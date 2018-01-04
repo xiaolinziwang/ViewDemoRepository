@@ -22,6 +22,7 @@
         <activity android:name=".Third.DispatchView2Activity" />
         <activity
             android:name=".Third.DispatchViewGroupActivity"
+            android:label="ViewGroup"></activity>
             android:label="ViewGroup" />
         <activity android:name=".Third.OuerIntercepetActivity" />
         <activity android:name=".First.notes.StartActivity" />
@@ -45,6 +46,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".Ten.AsyncTaskActivity"></activity>
+        <activity android:name=".Recycleview.RecycleviewActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

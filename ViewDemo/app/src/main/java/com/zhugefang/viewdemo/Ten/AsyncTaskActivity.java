@@ -43,7 +43,6 @@ public class AsyncTaskActivity extends BaseActivity {
 
         @Override
         protected void onProgressUpdate(Integer... values) {
-            pr
             super.onProgressUpdate(values);
         }
 

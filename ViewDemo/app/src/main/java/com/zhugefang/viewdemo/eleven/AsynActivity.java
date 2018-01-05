@@ -15,6 +15,7 @@ import java.util.Date;
 
 /*
 * http://blog.csdn.net/kufeiyun/article/details/41477069
+* http://www.importnew.com/18126.html
 * */
 public class AsynActivity extends BaseActivity {
 
@@ -57,6 +58,7 @@ public class AsynActivity extends BaseActivity {
         protected String doInBackground(String... params) {
             try {
                 Thread.sleep(3000);
+                publishProgress();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

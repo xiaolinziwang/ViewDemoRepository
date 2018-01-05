@@ -1,16 +1,13 @@
-package com.zhugefang.viewdemo.eleven;
+package com.zhugefang.viewdemo.Eleven;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-
 import com.zhugefang.viewdemo.R;
 import com.zhugefang.viewdemo.Third.BaseActivity;
-
 import java.lang.ref.WeakReference;
 
 /**

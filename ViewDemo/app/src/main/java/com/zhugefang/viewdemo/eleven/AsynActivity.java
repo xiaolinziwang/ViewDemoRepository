@@ -1,15 +1,12 @@
-package com.zhugefang.viewdemo.eleven;
+package com.zhugefang.viewdemo.Eleven;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import com.zhugefang.viewdemo.R;
 import com.zhugefang.viewdemo.Third.BaseActivity;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

@@ -37,7 +37,7 @@
         <activity
             android:name=".Twelve.ImageLoaderActivity"
             android:hardwareAccelerated="true" />
-        <activity android:name=".eleven.ThreadActivity">
+        <activity android:name=".Eleven.ThreadActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -45,9 +45,18 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".Ten.AsyncTaskActivity" />
-        <activity android:name=".Recycleview.RecycleviewActivity">
+        <activity android:name=".Recycleview.RecycleviewActivity" />
+        <activity android:name=".Eleven.AsynActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".eleven.AsynActivity">
+        <activity android:name=".Ten.HandlerActivity" />
+        <activity android:name=".Eleven.HandlerThreadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

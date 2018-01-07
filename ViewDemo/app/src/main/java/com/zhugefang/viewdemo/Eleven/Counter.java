@@ -15,7 +15,9 @@ public class Counter implements Runnable {
         count = 0;
     }
 
-
+    /*
+    *
+    * */
     public void countAdd() {
         synchronized (this) {
             for (int i = 0; i < 5; i++) {

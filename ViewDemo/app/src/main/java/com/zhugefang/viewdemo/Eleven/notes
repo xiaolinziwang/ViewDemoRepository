@@ -1,2 +1,11 @@
 http://blog.csdn.net/luoweifu/article/details/46613015 :Synchronized
 http://blog.csdn.net/zxw136511485/article/details/53032658 ：runnable
+
+Synchronized的用法：
+1\修饰一个代码块：
+synchronized(object){}
+类 Account是给对象枷锁
+类 Counter是给当前线程枷锁 synchronized(this){}
+2\public synchronized void method(){//todo};
+
+

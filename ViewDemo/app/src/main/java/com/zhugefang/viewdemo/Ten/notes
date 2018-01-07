@@ -1,0 +1,24 @@
+http://blog.csdn.net/guolin_blog/article/details/11711405:asyncTask
+
+Looper.java中：
+  public static void prepare() {
+        prepare(true);
+    }
+
+    private static void prepare(boolean quitAllowed) {
+        if (sThreadLocal.get() != null) {
+            throw new RuntimeException("Only one Looper may be created per thread");
+        }
+        sThreadLocal.set(new Looper(quitAllowed));
+    }
+说明每一个线程中只有一个Looper对象;
+MessageQueue是在Looper是在构造方法时就创建了，因此一个Looper也就对应了一个MessageQueue。
+ private Looper(boolean quitAllowed) {
+        mQueue = new MessageQueue(quitAllowed);
+        mThread = Thread.currentThread();
+    }
+
+    enqueueMessage是在sendMessageAtTime中发生的，但是取消息就是在Looper.loop()中
+
+    为什么使用异步消息处理的方式就可以对UI进行操作了呢？这是由于Handler总是依附于创建时所在的线程
+

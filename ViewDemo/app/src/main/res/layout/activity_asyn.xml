@@ -4,7 +4,7 @@
     android:id="@+id/activity_asyn"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zhugefang.viewdemo.eleven.AsynActivity">
+    tools:context="com.zhugefang.viewdemo.Eleven.AsynActivity">
 
     <Button
         android:id="@+id/execute"

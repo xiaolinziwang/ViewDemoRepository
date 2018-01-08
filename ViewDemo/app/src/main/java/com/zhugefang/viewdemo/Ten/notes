@@ -1,5 +1,5 @@
 http://blog.csdn.net/guolin_blog/article/details/11711405:asyncTask
-
+https://www.cnblogs.com/baiqiantao/p/7425120.html:Handler内存泄漏
 Looper.java中：
   public static void prepare() {
         prepare(true);
@@ -21,4 +21,10 @@ MessageQueue是在Looper是在构造方法时就创建了，因此一个Looper�
     enqueueMessage是在sendMessageAtTime中发生的，但是取消息就是在Looper.loop()中
 
     为什么使用异步消息处理的方式就可以对UI进行操作了呢？这是由于Handler总是依附于创建时所在的线程
+
+
+    abstract:
+    1\abstract关键字可以修饰类或者方法
+    2、abstract类可以拓展（增加子类），但是不能直接实例化
+    3、abstract方法不再声明它的类中实现，但是必须在某个子类中重写
 

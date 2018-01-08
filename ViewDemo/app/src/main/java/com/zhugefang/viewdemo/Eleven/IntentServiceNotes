@@ -1,0 +1,30 @@
+https://www.cnblogs.com/zhaoyanjun/p/6048369.html :LocalBroadcastManager
+
+IntentService中内部类ServiceHandler:
+ private final class ServiceHandler extends Handler {
+        public ServiceHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            onHandleIntent((Intent)msg.obj);
+            stopSelf(msg.arg1);
+        }
+    }
+
+    hanlder依赖于looper,looper在哪儿，handler就在哪儿
+
+    oncreate()中 new出了ServiceHandler，
+    onStartCommand（）{
+     Message msg = mServiceHandler.obtainMessage();
+            msg.arg1 = startId;
+            msg.obj = intent;
+            mServiceHandler.sendMessage(msg);}，sendMessage(),intent作为obj;
+
+LocalBroadcastManager:
+局部通知管理器：
+好处：安全性高，适合局部通信，可以用来代替Handler更新Ui
+1\因为广播数据在本应用范围内传播，你不用担心隐私数据泄密的问题
+2、不用担心别的应用伪造广播，造成安全隐患
+3、相比在系统内发送全局广播，他更高效

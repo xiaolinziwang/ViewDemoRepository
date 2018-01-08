@@ -37,7 +37,7 @@
         <activity
             android:name=".Twelve.ImageLoaderActivity"
             android:hardwareAccelerated="true"/>
-        <activity android:name=".Eleven.ThreadActivity"></activity>
+        <activity android:name=".Eleven.ThreadActivity"/>
         <activity android:name=".Ten.AsyncTaskActivity"/>
         <activity android:name=".Recycleview.RecycleviewActivity"/>
         <activity android:name=".Eleven.AsynActivity">
@@ -50,11 +50,11 @@
         </activity>
         <activity android:name=".Ten.HandlerActivity"/>
         <activity android:name=".Eleven.HandlerThreadActivity">
-            <intent-filter>
+           <!-- <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".Eleven.IntentServiceActivity">
 
@@ -67,7 +67,14 @@
 
         <service android:name=".Eleven.UploadImgService"/>
 
-        <activity android:name=".Eleven.MyIntentServiceActivity"></activity>
+        <activity android:name=".Eleven.MyIntentServiceActivity"/>
+        <activity android:name=".Eleven.ThreadPoolExecutoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

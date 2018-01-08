@@ -1,5 +1,6 @@
 package com.zhugefang.viewdemo.Eleven;
 
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;

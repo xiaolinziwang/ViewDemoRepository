@@ -50,11 +50,14 @@
         </activity>
         <activity android:name=".Ten.HandlerActivity"/>
         <activity android:name=".Eleven.HandlerThreadActivity">
-           <!-- <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <activity android:name=".Eleven.IntentServiceActivity">
 
@@ -69,6 +72,9 @@
 
         <activity android:name=".Eleven.MyIntentServiceActivity"/>
         <activity android:name=".Eleven.ThreadPoolExecutoActivity">
+
+        </activity>
+        <activity android:name=".Eight.WindowActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

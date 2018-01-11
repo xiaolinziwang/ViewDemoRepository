@@ -1,3 +1,26 @@
 http://blog.csdn.net/yhaolpz/article/details/68936932
+android的显示系统分为三个层次：
+Ui框架层：负责管理窗口中view控件的布局与绘制，以及响应用户输入事件
+Imagebutton\listview\button\imageview
+WMS：负责管理窗口surface的布局与次序
+window1 window2,window3\window4
+SurfaceFlinger:
+将WMS维护的窗口surface按照一定的次序混合显示在屏幕上
+
+对Window的操作通过WindowManager即可完成，WindowManagerService作为系统级服务运行在一个单独的进程，所以
+WindowManager和WindowMangerServiece的交互是一个IPC过程
+
+Window有三种分类：应用window\子window\系统window  是根据WindowManager.LayoutParams 的 type 的范围来定义的
+
+对window的操作是通过windowManager来完成的，WindowManager是一个接口，它继承自只有三个方法的viewManager:
+public interface ViewManager{
+    public void addView(View view, ViewGroup.LayoutParams params);
+    public void updateViewLayout(View view, ViewGroup.LayoutParams params);
+    public void removeView(View view);
+}
+WindowManager 并没有去重写这三个方法，WindowManager更多的是去定义了一些常量和接口
+
+window是一个抽象的类，不能被实例化
+
 
 

@@ -11,6 +11,11 @@ SurfaceFlinger:
 WindowManager和WindowMangerServiece的交互是一个IPC过程
 
 Window有三种分类：应用window\子window\系统window  是根据WindowManager.LayoutParams 的 type 的范围来定义的
+Window                             type
+应用Window                         1~99
+子Window                           1000~1999
+系统Window                         2000~2999
+
 
 对window的操作是通过windowManager来完成的，WindowManager是一个接口，它继承自只有三个方法的viewManager:
 public interface ViewManager{
@@ -18,9 +23,20 @@ public interface ViewManager{
     public void updateViewLayout(View view, ViewGroup.LayoutParams params);
     public void removeView(View view);
 }
-WindowManager 并没有去重写这三个方法，WindowManager更多的是去定义了一些常量和接口
+WindowManager 并没有去重写这三个方法，WindowManager更多的是去定义了一些常量和接口，因为WindowManager是一个接口
 
 window是一个抽象的类，不能被实例化
+
+无法直接访问Window,对Window的访问必须通过WindowManager,WindowManager提供的三个接口方法：
+addView\updateViewLayout\removeView都是针对view的，这说明View才是Window存在的实体，WindowManager是一个接口，
+它真正实现是WindowManagerImpl类：
+
+Window的创建:
+View是android中视图呈现的方式，但是view不能单独存在，他必须依附着Window这个抽象的概念，因此有视图的地方就有Window.
+android可以提供视图的地方：activity、dialog\Toast\,还有一些依托Window而实现的视图：PopUpWindow(自定义弹出窗口)、菜单、他们也是
+视图，
+
+
 
 
 

@@ -23,7 +23,7 @@ public class WindowActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         }
-        //setContentView(R.layout.activity_window);
+        setContentView(R.layout.activity_window);
         //WindowManager.LayoutParams是继承自ViewGroup.LayoutParams,Window是一个抽象的类，不能new,
         //所以添加view的时候，都是2个参数，view和params的形式
         TextView button = new TextView(this);

@@ -92,5 +92,6 @@ public class ComparaMain {
         for (Integer i : list) {
             System.out.println(i + "");
         }
+
     }
 }

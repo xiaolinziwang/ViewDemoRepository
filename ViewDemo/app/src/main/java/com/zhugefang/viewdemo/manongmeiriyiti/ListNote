@@ -1,0 +1,10 @@
+ArrayList arrayList=new ArrayList();
+LinkedList linkedList=new LinkedList();
+arrayList.get(i)比linkedList.get(i)高效，arrayList直接通过下标取，
+下标是紧挨着的，但是下标之间又是毫无联系的
+
+ArrayList通过get(i)取比通过for-each取高效
+LinkedList通过for-each取比get(i)高效
+
+
+LinkedList不但实现了List接口还实现了双端队列Deque双端队列接口

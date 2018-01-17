@@ -1,3 +1,5 @@
+https://www.cnblogs.com/tstd/p/5125949.html  ：PriorityQueue
+
 ArrayList arrayList=new ArrayList();
 LinkedList linkedList=new LinkedList();
 arrayList.get(i)比linkedList.get(i)高效，arrayList直接通过下标取，
@@ -8,3 +10,18 @@ LinkedList通过for-each取比get(i)高效
 
 
 LinkedList不但实现了List接口还实现了双端队列Deque双端队列接口
+
+问：简单谈谈ArrayList、LinkedList\List的区别
+答：Lit是集合列表接口，ArrayList和LinkedList都是List接口的实现类。ArrayList是动态数组顺序表，
+顺序表的存储地址是连续的，所以查找起来比较快，但是插入和删除时由于需要把其他的元素顺序移动，所以比较耗时。
+LinkedList是双向链表的数据结构，同时实现了双端队列Deque接口，链表节点的存储地址是不连续的，每一个存储地址通过
+指针关联，在查找时需要进行指针遍历节点，所以查找就比较慢，而在插入和删除时比较快。此外，还可以当做栈使用，因为实现了pop()
+和push(),LinkedList的元素可以为null值
+双向链表也叫双链表，是链表的一种，它的每个数据结点中都有两个指针，分别指向直接后继和直接前驱。所以，
+从双向链表中的任意一个结点开始，都可以很方便地访问它的前驱结点和后继结点。一般我们都构造双向循环链表。
+
+Queue:队列是一种特殊的线性表，是一种先进先出（FIFO）的数据结构。它只允许在表的前端（front）
+进行删除操作，而在表的后端（rear）进行插入操作。
+进行插入操作的端称为队尾，进行删除操作的端称为队头。队列中没有元素时，称为空队列。
+
+PriorityQueue中元素按从小到大的顺序排序，基于动态数组的二叉堆来确定优先级，而并非按照插入顺序，元素值不可以为null.

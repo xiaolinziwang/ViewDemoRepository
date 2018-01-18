@@ -1,0 +1,2 @@
+测量view的宽高：
+1、Activity/View#onWindowFocusChanged():得到或者失去焦点会被调用，即onResume和onPause被触发时

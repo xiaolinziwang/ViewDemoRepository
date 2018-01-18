@@ -12,9 +12,9 @@ WindowManager和WindowMangerServiece的交互是一个IPC过程
 
 Window有三种分类：应用window\子window\系统window  是根据WindowManager.LayoutParams 的 type 的范围来定义的
 Window                             type
-应用Window                         1~99
-子Window                           1000~1999
-系统Window                         2000~2999
+应用Window                         1~99         对应着一个activity
+子Window                           1000~1999     子window不能单独存在，他需要附属在特定的父window之中，比如常见的dialog
+系统Window                         2000~2999      需要声明权限才能创建的Window,比如Toast和系统状态栏这些都是系统window
 
 
 对window的操作是通过windowManager来完成的，WindowManager是一个接口，它继承自只有三个方法的viewManager:
@@ -55,7 +55,14 @@ WindowManagerGlobal中addView():
         // do this last because it fires off messages to start doing things
         try {
             root.setView(view, wparams, panelParentView);
-
-
-
+Window的添加过程：
+windowManager.addView(view, layoutParams)--》WindowManagerImpl:addView(view, layoutParams)-->
+ mGlobal.addView(view, params, mContext.getDisplay(), mParentWindow);----> Viewrootimpl.setView(view, wparams, panelParentView);
+--->Wiewrootimpl:requestLayou();---> IWindowSession.pokeDrawLock(mWindow);--->WindowService.addWindow(xxx,xxx,...)
+Window的删除过程：
+windowManager.removeView(button);--》WindowManagerImpl.removeView(View view)-->mGlobal.removeView(view, false);
+-->ViewRootImpl.die(immediate:false)--->ViewRootImpl.dodie()---> IWindowSession.remove(mWindow);\WindowManagerGlobal.getInstance().doRemoveView(this);
+viewRootImpl 对应着一个view
+Display:提供有关逻辑显示的大小和密度的信息。
+View是android中的视图的呈现方式，但是view不能单独存在，他必须依附着window这个抽象的概念上面，因此有视图的地方就有Window.
 

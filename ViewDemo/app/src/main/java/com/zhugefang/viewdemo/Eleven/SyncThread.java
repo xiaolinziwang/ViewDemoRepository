@@ -42,11 +42,11 @@ public class SyncThread implements Runnable {
         //1.一个线程访问一个对象中的synchronized(this)同步代码块时，
         // 其他试图访问该对象的线程将被阻塞。我们看下面一个例子：
         //第一种：
-        //SyncThread syncThread = new SyncThread();
-        //Thread syncThread1 = new Thread(syncThread, "SyncThread1");
-        //Thread syncThread2 = new Thread(syncThread, "SyncThread2");
-        //syncThread1.start();
-        //syncThread2.start();
+        SyncThread syncThread = new SyncThread();
+        Thread syncThread1 = new Thread(syncThread, "SyncThread1");
+        Thread syncThread2 = new Thread(syncThread, "SyncThread2");
+        syncThread1.start();
+        syncThread2.start();
         //第二种：
         //Thread syncThread1 = new Thread(new SyncThread(), "SyncThread1");
         //Thread syncThread2 = new Thread(new SyncThread(), "SyncThread2");

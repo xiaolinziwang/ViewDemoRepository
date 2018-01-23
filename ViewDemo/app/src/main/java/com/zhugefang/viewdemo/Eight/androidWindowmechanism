@@ -1,0 +1,3 @@
+https://www.jianshu.com/p/6afb0c17df43
+
+activity:new PhoneWindow----》PhoneWindow:decorview实例---》DecorView是当前Activity所有View的祖先，它并不会向用户呈现任何东西

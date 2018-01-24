@@ -1,3 +1,5 @@
+
+
 http://blog.csdn.net/yhaolpz/article/details/68936932
 android的显示系统分为三个层次：
 Ui框架层：负责管理窗口中view控件的布局与绘制，以及响应用户输入事件

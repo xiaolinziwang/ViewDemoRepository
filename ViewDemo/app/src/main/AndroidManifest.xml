@@ -70,21 +70,24 @@
                          </intent-filter>
             -->
         </activity>
+        <service android:name=".Eleven.UploadImgService" />
 
-        <service android:name=".Eleven.UploadImgService"/>
+        <activity android:name=".Eleven.MyIntentServiceActivity" />
+        <activity android:name=".Eleven.ThreadPoolExecutoActivity" />
+        <activity android:name=".Eight.WindowActivity" />
+        <activity android:name=".Four.ViewHeightActivity" />
+        <activity android:name=".Eight.Main4Activity"></activity>
+        <activity android:name=".Five.Main5Activity">
 
-        <activity android:name=".Eleven.MyIntentServiceActivity"/>
-        <activity android:name=".Eleven.ThreadPoolExecutoActivity"/>
-        <activity android:name=".Eight.WindowActivity"></activity>
-        <activity android:name=".Four.ViewHeightActivity"/>
-        <activity android:name=".Eight.Main4Activity">
+        </activity>
+        <activity android:name=".Eleven.LocalIntentActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Design.ScrollingActivity"></activity>
+        <service android:name=".Eleven.LocalIntentService"/>
+        <service android:name=".Eleven.LocalIntentService1"/>
     </application>
 
 </manifest>

@@ -1,5 +1,13 @@
 https://www.cnblogs.com/zhaoyanjun/p/6048369.html :LocalBroadcastManager
-
+重点：
+服务是android中实现程序后台运行的方案，他非常适合去执行那些不需要和用户交互而且还需要长期运行的任务
+。服务不依赖于任何用户界面，及时程序被切到后台，或者打开了另外一个应用程序，服务仍然能够保持正常运行
+后台有4成意思：
+1、服务不依赖于任何用户界面，及时程序被切到后台，或者打开了另外一个应用程序，服务仍然能够保持正常运行
+2、服务不是运行在一个独立的进程中的，而是依赖于创建服务时所在的应用程序进程，当进程被杀死，依赖的服务也停止了
+3、服务中的代码默认运行在主线程中；
+4、我们需要在服务内部手动创建子线程，并在这里执行具体的任务，否则主线程被阻塞，
+于是IntentService出现了，内部含有子线程，并且能够执行完任务后自杀
 IntentService中内部类ServiceHandler:
  private final class ServiceHandler extends Handler {
         public ServiceHandler(Looper looper) {

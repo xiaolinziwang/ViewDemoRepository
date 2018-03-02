@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zhugefang.viewdemo">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -13,44 +13,43 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Third.VelocityTrackerActivity" />
-        <activity android:name=".Third.GestureDetectorActivity" />
-        <activity android:name=".Third.ScrollerActivity" />
-        <activity android:name=".Third.ScrollerLayoutActivity" />
-        <activity android:name=".Third.DispatchActivity" />
-        <activity android:name=".Third.DispatchViewActivity" />
-        <activity android:name=".Third.DispatchView2Activity" />
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".Third.VelocityTrackerActivity"/>
+        <activity android:name=".Third.GestureDetectorActivity"/>
+        <activity android:name=".Third.ScrollerActivity"/>
+        <activity android:name=".Third.ScrollerLayoutActivity"/>
+        <activity android:name=".Third.DispatchActivity"/>
+        <activity android:name=".Third.DispatchViewActivity"/>
+        <activity android:name=".Third.DispatchView2Activity"/>
         <activity
             android:name=".Third.DispatchViewGroupActivity"
-            android:label="ViewGroup" />
-        <activity android:name=".Third.OuerIntercepetActivity" />
-        <activity android:name=".First.notes.StartActivity" />
-        <activity android:name=".First.notes.Start2Activity" />
-        <activity android:name=".Twelve.DecodeActivity" />
-        <activity android:name=".Twelve.LruActivity" />
+            android:label="ViewGroup"/>
+        <activity android:name=".Third.OuerIntercepetActivity"/>
+        <activity android:name=".First.notes.StartActivity"/>
+        <activity android:name=".First.notes.Start2Activity"/>
+        <activity android:name=".Twelve.DecodeActivity"/>
+        <activity android:name=".Twelve.LruActivity"/>
         <activity
             android:name=".First.LoadModeActivity"
             android:launchMode="singleTask"
-            android:taskAffinity="com.ryg.task1" />
-        <activity android:name=".First.SecondActivity" />
-        <activity android:name=".First.ThirdActivity" />
+            android:taskAffinity="com.ryg.task1"/>
+        <activity android:name=".First.SecondActivity"/>
+        <activity android:name=".First.ThirdActivity"/>
         <activity
             android:name=".Twelve.ImageLoaderActivity"
-            android:hardwareAccelerated="true" />
-        <activity android:name=".Eleven.ThreadActivity" />
-        <activity android:name=".Ten.AsyncTaskActivity" />
-        <activity android:name=".Recycleview.RecycleviewActivity" />
+            android:hardwareAccelerated="true"/>
+        <activity android:name=".Eleven.ThreadActivity"/>
+        <activity android:name=".Ten.AsyncTaskActivity"/>
+        <activity android:name=".Recycleview.RecycleviewActivity"/>
         <activity android:name=".Eleven.AsynActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".Ten.HandlerActivity" />
+        <activity android:name=".Ten.HandlerActivity"/>
         <activity android:name=".Eleven.HandlerThreadActivity">
 
             <!--
@@ -72,21 +71,20 @@
             -->
         </activity>
 
-        <service android:name=".Eleven.UploadImgService" />
+        <service android:name=".Eleven.UploadImgService"/>
 
-        <activity android:name=".Eleven.MyIntentServiceActivity" />
-        <activity android:name=".Eleven.ThreadPoolExecutoActivity" />
-        <activity android:name=".Eight.WindowActivity">
-
-        </activity>
-        <activity android:name=".Four.ViewHeightActivity" />
+        <activity android:name=".Eleven.MyIntentServiceActivity"/>
+        <activity android:name=".Eleven.ThreadPoolExecutoActivity"/>
+        <activity android:name=".Eight.WindowActivity"></activity>
+        <activity android:name=".Four.ViewHeightActivity"/>
         <activity android:name=".Eight.Main4Activity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".Design.ScrollingActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,2 @@
+java线程优先级1~10，默认是5，优先级对系统而言更多的是建议和提示而非强制，不要过于依赖优先级
+java Thread通过State getState()来获取线程状态，Thread.State枚举定义了：

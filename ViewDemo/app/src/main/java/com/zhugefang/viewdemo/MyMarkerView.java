@@ -1,10 +1,12 @@
 package com.zhugefang.viewdemo;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
-import android.view.View;
+import android.text.style.AbsoluteSizeSpan;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.github.mikephil.charting.components.MarkerView;
@@ -14,20 +16,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.Utils;
-import com.zhugefang.viewdemo.Twelve.TimeMachineAdapter;
-import com.zhugefang.viewdemo.tools.ItemClickListener;
 import com.zhugefang.viewdemo.tools.PxAndDp;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/6.
  * 折线图点击折点显示信息
  */
 public class MyMarkerView extends MarkerView {
-
-    private final RecyclerView rv;
-    private final TimeMachineAdapter mTimeMachineAdapter;
+    private final TextView tv_all;
     public TextView tvContent;
     private int containerWidth;
     private int containerHeight;
@@ -37,37 +33,19 @@ public class MyMarkerView extends MarkerView {
     private String unit;
 
     private LineData lineData;
+    private int btnLeft;
+    private int btnTop;
+    private int btnRight;
+    private int btnBottom;
+    Context mContext;
 
 
     public MyMarkerView(final Context context, int layoutResource) {
         super(context, layoutResource);
-
+        this.mContext = context;
         tvContent = (TextView) findViewById(R.id.tvContent);
-        rv = (RecyclerView) findViewById(R.id.rv);
-        tvContent.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context,"textview",Toast.LENGTH_LONG).show();
-            }
-        });
+        tv_all = (TextView) findViewById(R.id.tv_all);
         offset = PxAndDp.dip2px(context, 5);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(linearLayoutManager);
-        mTimeMachineAdapter = new TimeMachineAdapter(context, dataList);
-        rv.setAdapter(mTimeMachineAdapter);
-        rv.addOnItemTouchListener(new ItemClickListener(rv, new ItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(context,"aaa",Toast.LENGTH_LONG).show();
-            }
-
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-                Toast.makeText(context,"BBBBB",Toast.LENGTH_LONG).show();
-            }
-        }));
     }
 
 
@@ -92,14 +70,10 @@ public class MyMarkerView extends MarkerView {
     }
 
 
-    private List<String> dataList = new ArrayList<>();
-
-
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-
         if (e instanceof CandleEntry) {
 
             CandleEntry ce = (CandleEntry) e;
@@ -124,22 +98,19 @@ public class MyMarkerView extends MarkerView {
                             if (TextUtils.isEmpty(unit)) {
                                 builder.append(
                                         "\n" + data.getLabel() + ":" + (int) entry.getVal() + "");
-                                dataList.add(data.getLabel() + ":" + (int) entry.getVal() + "");
                             } else {
                                 builder.append(
                                         "\n" + data.getLabel() + ":" + (int) entry.getVal() + unit);
-                                dataList.add(data.getLabel() + ":" + (int) entry.getVal() + "");
                             }
                             break;
                         }
                     }
                 }
-                mTimeMachineAdapter.notifyDataSetChanged();
-                //SpannableString spannableString = new SpannableString(builder.toString());
-                //spannableString
-                //        .setSpan(new AbsoluteSizeSpan((int) (tvContent.getTextSize() * 1.2)), 0, str
-                //                .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                //tvContent.setText(spannableString);
+                SpannableString spannableString = new SpannableString(builder.toString());
+                spannableString
+                        .setSpan(new AbsoluteSizeSpan((int) (tvContent.getTextSize() * 1.2)), 0, str
+                                .length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                tvContent.setText(spannableString);
                 return;
             }
             //如果callback不为空 就不需要下面那段逻辑
@@ -189,5 +160,52 @@ public class MyMarkerView extends MarkerView {
 
     public interface CallBack {
         CharSequence getInfo(int index);
+    }
+
+
+    @Override
+    public void markViewClick() {
+        Toast.makeText(mContext, "onClick 全部!", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public boolean isTouch(MotionEvent event) {
+        btnLeft = tv_all.getLeft();
+        btnTop = tv_all.getTop();
+        btnRight = tv_all.getRight();
+        btnBottom = tv_all.getBottom();
+        int width = getWidth();
+        int height = getHeight();
+        Log.d("MyMarkerView",
+                "tv_all: " + btnLeft + "、" + btnTop + "、" + btnRight + "、" + btnBottom);
+        Log.d("MyMarkerView", "tv_all: getX():" + tv_all.getX() + "、getY():" + tv_all.getY());
+        Log.d("MyMarkerView",
+                "marker_view: " + getLeft() + "、" + getTop() + "、" + getRight() + "、" +
+                        getBottom());
+        Log.d("MyMarkerView", "marker_view: " + getX() + "、" + getY());
+        Log.d("MyMarkerView", "event.getX(): " + event.getX() + ",event.getY():" + event.getY());
+        return event.getY() <= getBottom()&&tv_all.getY()<event.getY();
+        //if (mPosy == 0) {
+        //    return false;
+        //}
+        //float left = mPosx - getWidth() / 2;
+        //float top = mPosy - getHeight();
+        //float right = mPosx + getWidth() / 2;
+        //float bottom = mPosy;
+        //
+        //boolean touchInMarkerView = new RectF(left, top, right, bottom)
+        //        .contains(event.getX(), event.getY());
+        //
+        //if (touchInMarkerView) {
+        //    setRelativeTouchPointX(event.getX() - left);
+        //    setRelativeTouchPointY(event.getY() - top);
+        //}
+        //
+        //mPosx = 0;
+        //mPosy = 0;
+
+        //return touchInMarkerView;
+
     }
 }

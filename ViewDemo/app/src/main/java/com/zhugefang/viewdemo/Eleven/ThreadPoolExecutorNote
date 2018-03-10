@@ -2,5 +2,6 @@ http://blog.csdn.net/u012702547/article/details/52259529
 workQueue ：线程池中的任务队列，该队列主要用来存储已经被提交但是尚未执行的任务，存储在这里的任务
 是由ThreadPoolExecutor的execute来执行的
 threadFactory  ：为线程池提供创建新线程的功能，这个我们一般使用默认
-handler ：拒绝策略，当线程无法执行新任务时（一般是由于线程池中的线程数量已经达到最大数或者线程池关闭导致的），
+handler ：拒绝策略，当线程无法执行新任务时
+（一般是由于线程池中的线程数量已经达到最大数或者线程池关闭导致的），
 默认情况下，当线程池无法处理新线程时，会抛出一个RejectedExecutionException。

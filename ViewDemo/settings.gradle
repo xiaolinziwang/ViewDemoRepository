@@ -1,1 +1,1 @@
-include ':app', ':scrollviewactivity'
+include ':app', ':scrollviewactivity', ':MPChartLib'

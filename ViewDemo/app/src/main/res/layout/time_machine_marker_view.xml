@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tvContent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/mark_tags_corner"
+    android:ellipsize="end"
+    android:scrollbars="vertical"
+    android:maxLines="3"
+    android:padding="6dp"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:textColor="@color/white"
+    android:textSize="12dp" />
+

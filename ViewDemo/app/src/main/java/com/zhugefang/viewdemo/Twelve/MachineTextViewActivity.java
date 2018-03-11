@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
 import butterknife.Bind;
+
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -21,6 +23,7 @@ import com.zhugefang.viewdemo.Third.BaseActivity;
 import com.zhugefang.viewdemo.entity.DetailTimeMachineEntity;
 import com.zhugefang.viewdemo.tools.ObjectUtil;
 import com.zhugefang.viewdemo.tools.TimeUtil;
+
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,8 +38,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class MachineTextViewActivity extends BaseActivity {
-    @Bind(R.id.tv) TextView mTextView;
-    @Bind(R.id.chart0) LineChart timeMachineLintChart;
+    @Bind(R.id.tv)
+    TextView mTextView;
+    @Bind(R.id.chart0)
+    LineChart timeMachineLintChart;
 
 
     @Override
@@ -48,8 +53,9 @@ public class MachineTextViewActivity extends BaseActivity {
     }
 
     List<DetailTimeMachineEntity.DataBean.PriceArrBean> price_arrList = new ArrayList<>();
+
     private void reQ() {
-        String response="{\n" +
+        String response = "{\n" +
                 "\t\"error\": 0,\n" +
                 "\t\"code\": 200,\n" +
                 "\t\"message\": \"\\u6210\\u529f\\u8fd4\\u56de\",\n" +
@@ -339,7 +345,8 @@ public class MachineTextViewActivity extends BaseActivity {
                     initTimeMachineChartView(generateNewDataLineTimeMachine(priceArrList));//绘制折线图
                 }
             }
-        }}
+        }
+    }
 
     /*  第一个折线图价格分析图第二次设置*/
 
@@ -429,7 +436,7 @@ public class MachineTextViewActivity extends BaseActivity {
                 }
             });
             for (Entry e : datayVals) {
-                Log.d(TAG,e.getXIndex() + "," + e.getVal());
+                Log.d(TAG, e.getXIndex() + "," + e.getVal());
             }
             LineDataSet d = new LineDataSet(datayVals, source_name);
             d.setLineWidth(2.5f);
@@ -470,6 +477,7 @@ public class MachineTextViewActivity extends BaseActivity {
         final MyMarkerView mv = new MyMarkerView(this, R.layout.marker_view_rv);
         mv.setLineData(lineData);
         mv.setUnit("万");
+        mv.setChartView(timeMachineLintChart);
         mv.setVerticalScrollBarEnabled(true);
 
         timeMachineLintChart.setMarkerView(mv);

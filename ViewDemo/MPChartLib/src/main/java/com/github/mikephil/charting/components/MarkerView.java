@@ -41,7 +41,9 @@ public abstract class MarkerView extends RelativeLayout implements IMarker {
     public void setRelativeTouchPointX(float relativeTouchPointX) {
         this.relativeTouchPointX = relativeTouchPointX;
     }
-
+    public void setChartView(Chart chart) {
+        mWeakChart = new WeakReference<>(chart);
+    }
     public float getRelativeTouchPointY() {
         return relativeTouchPointY;
     }

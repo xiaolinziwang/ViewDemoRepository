@@ -1,6 +1,7 @@
 package com.zhugefang.viewdemo;
 
 import android.content.Context;
+import android.graphics.RectF;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -9,12 +10,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Utils;
 import com.zhugefang.viewdemo.tools.PxAndDp;
 
@@ -38,6 +41,10 @@ public class MyMarkerView extends MarkerView {
     private int btnRight;
     private int btnBottom;
     Context mContext;
+    private int minusBtnLeft;
+    private int minusBtnTop;
+    private int minusBtnRight;
+    private int minusBtnBottom;
 
 
     public MyMarkerView(final Context context, int layoutResource) {
@@ -74,6 +81,10 @@ public class MyMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
+        minusBtnLeft = tv_all.getLeft();
+        minusBtnTop = tv_all.getTop();
+        minusBtnRight = tv_all.getRight();
+        minusBtnBottom = tv_all.getBottom();
         if (e instanceof CandleEntry) {
 
             CandleEntry ce = (CandleEntry) e;
@@ -121,28 +132,29 @@ public class MyMarkerView extends MarkerView {
     }
 
 
-    @Override
-    public int getXOffset(float xpos) {
-        // this will center the marker-view horizontally
-        if (xpos + getWidth() + offset > this.containerWidth) {
-            return -getWidth() - offset;
-        }
-        return offset;
-    }
+//    @Override
+//    public int getXOffset(float xpos) {
+//        // this will center the marker-view horizontally
+//        if (xpos + getWidth() + offset > this.containerWidth) {
+//            return -getWidth() - offset;
+//        }
+//        return offset;
+//
+//    }
 
 
-    @Override
-    public int getYOffset(float ypos) {
-        // this will cause the marker-view to be above the selected value
-        return -getHeight();
-        //        if (ypos - getHeight() - offset < 0) {
-        //            if (ypos == getHeight()) { //详情页价格分析折线图使用这个条件  ypos有问题
-        //                return (int) -ypos / 2;
-        //            }
-        //            return -offset;
-        //        }
-        //        return (-getHeight() - offset);
-    }
+//    @Override
+//    public int getYOffset(float ypos) {
+//        // this will cause the marker-view to be above the selected value
+//        return -getHeight();
+//        //        if (ypos - getHeight() - offset < 0) {
+//        //            if (ypos == getHeight()) { //详情页价格分析折线图使用这个条件  ypos有问题
+//        //                return (int) -ypos / 2;
+//        //            }
+//        //            return -offset;
+//        //        }
+//        //        return (-getHeight() - offset);
+//    }
 
     //    @Override
     //    public int getYOffset(float ypos) {
@@ -165,47 +177,26 @@ public class MyMarkerView extends MarkerView {
 
     @Override
     public void markViewClick() {
-        Toast.makeText(mContext, "onClick 全部!", Toast.LENGTH_SHORT).show();
-    }
+        Log.e("Demo", "onClick relativeTouchPointX = " + getRelativeTouchPointX() + ", relativeTouchPointY = " + getRelativeTouchPointY());
 
+        float x = getRelativeTouchPointX();
+        float y = getRelativeTouchPointY();
+/**
+ *   最终的核心思想就是利用点击point在markerview中的相对位置，是否被包含在了对应的button区域内。因为此时button的(l,t,r,b)也是相对于markerviwe的坐标，这样2者在同一个坐标系中，是可以判断的。从而实现了点击不同的区域，就相当于点击不同的按钮事件!
+ **/
+        if (new RectF(minusBtnLeft, minusBtnTop, minusBtnRight, minusBtnBottom).contains(x, y))
+            Toast.makeText(mContext, "onClick minusButton!", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
-    public boolean isTouch(MotionEvent event) {
-        btnLeft = tv_all.getLeft();
-        btnTop = tv_all.getTop();
-        btnRight = tv_all.getRight();
-        btnBottom = tv_all.getBottom();
-        int width = getWidth();
-        int height = getHeight();
-        Log.d("MyMarkerView",
-                "tv_all: " + btnLeft + "、" + btnTop + "、" + btnRight + "、" + btnBottom);
-        Log.d("MyMarkerView", "tv_all: getX():" + tv_all.getX() + "、getY():" + tv_all.getY());
-        Log.d("MyMarkerView",
-                "marker_view: " + getLeft() + "、" + getTop() + "、" + getRight() + "、" +
-                        getBottom());
-        Log.d("MyMarkerView", "marker_view: " + getX() + "、" + getY());
-        Log.d("MyMarkerView", "event.getX(): " + event.getX() + ",event.getY():" + event.getY());
-        return event.getY() <= getBottom()&&tv_all.getY()<event.getY();
-        //if (mPosy == 0) {
-        //    return false;
-        //}
-        //float left = mPosx - getWidth() / 2;
-        //float top = mPosy - getHeight();
-        //float right = mPosx + getWidth() / 2;
-        //float bottom = mPosy;
-        //
-        //boolean touchInMarkerView = new RectF(left, top, right, bottom)
-        //        .contains(event.getX(), event.getY());
-        //
-        //if (touchInMarkerView) {
-        //    setRelativeTouchPointX(event.getX() - left);
-        //    setRelativeTouchPointY(event.getY() - top);
-        //}
-        //
-        //mPosx = 0;
-        //mPosy = 0;
+    public MPPointF getOffset() {
+        MPPointF mpPointF = new MPPointF();
+//        mpPointF.x = -getWidth()-offset;
+//        mpPointF.y = -getHeight();
+        mpPointF.x = -getWidth() / 2;
+        mpPointF.y = -getHeight();
 
-        //return touchInMarkerView;
-
+        return mpPointF;
     }
+
 }

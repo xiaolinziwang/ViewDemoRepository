@@ -23,6 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white"
         android:textSize="12dp"
+        android:background="@drawable/markerview_see_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

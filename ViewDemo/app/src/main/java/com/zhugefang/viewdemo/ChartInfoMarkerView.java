@@ -78,4 +78,9 @@ public class ChartInfoMarkerView extends MarkerView {
     public void refreshContent(Entry e, Highlight highlight) {
 
     }
+
+    @Override
+    public boolean isTouch(MotionEvent event) {
+        return false;
+    }
 }

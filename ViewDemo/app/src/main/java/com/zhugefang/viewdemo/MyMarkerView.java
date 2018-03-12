@@ -84,10 +84,6 @@ public class MyMarkerView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        minusBtnLeft = tv_all.getLeft();
-        minusBtnTop = tv_all.getTop();
-        minusBtnRight = tv_all.getRight();
-        minusBtnBottom = tv_all.getBottom();
         if (e instanceof CandleEntry) {
 
             CandleEntry ce = (CandleEntry) e;
@@ -177,29 +173,81 @@ public class MyMarkerView extends MarkerView {
         CharSequence getInfo(int index);
     }
 
+    @Override
+    public boolean isTouch(MotionEvent event) {
+        if (mpPointF.x == 0)
+            return false;
+
+//        float left = mpPointF.x - getWidth() / 2;
+        float left = mpPointF.x - getWidth();
+//        float top = mpPointF.y - getHeight();
+        float right = mpPointF.x;
+        float bottom = mpPointF.y;
+//        float right = mpPointF.x+getWidth() / 2;
+        float top = -mpPointF.y - getChartView().getViewPortHandler().offsetTop();
+        if (mOffset2.x < 0) {
+           left = mpPointF.x - getWidth();
+            right = mpPointF.x;
+        }else {
+            left = mpPointF.x;
+            right = mpPointF.x+getWidth();
+        }
+
+
+        boolean touchInMarkerView = new RectF(left, top, right, bottom).contains(event.getX(), event.getY());
+        if (touchInMarkerView) {
+            float x = event.getX() - left;
+            float y = event.getY();
+//            float y = event.getY() - top;
+//            setRelativeTouchPointX(event.getX() - left);
+//            setRelativeTouchPointY(event.getY() - top);
+            minusBtnLeft = tv_all.getLeft();
+            minusBtnTop = tv_all.getTop();
+            minusBtnRight = tv_all.getRight();
+            minusBtnBottom = tv_all.getBottom();
+            if (new RectF(minusBtnLeft, minusBtnTop, minusBtnRight, minusBtnBottom).contains(x, y)) {
+                touchInMarkerView = true;
+            } else {
+                touchInMarkerView = false;
+            }
+        }
+
+        mpPointF.x = 0;
+        mpPointF.y = 0;
+
+        return touchInMarkerView;
+    }
 
     @Override
     public void markViewClick() {
+
         Log.e("Demo", "onClick relativeTouchPointX = " + getRelativeTouchPointX() + ", relativeTouchPointY = " + getRelativeTouchPointY());
 
-        float x = getRelativeTouchPointX();
-        float y = getRelativeTouchPointY();
+
 /**
- *   最终的核心思想就是利用点击point在markerview中的相对位置，是否被包含在了对应的button区域内。因为此时button的(l,t,r,b)也是相对于markerviwe的坐标，这样2者在同一个坐标系中，是可以判断的。从而实现了点击不同的区域，就相当于点击不同的按钮事件!
+ *   最终的核心思想就是利用点击point在markerview中的相对位置，是否被包含在了对应的button区域内。
+ *   因为此时button的(l,t,r,b)也是相对于markerviwe的坐标，这样2者在同一个坐标系中，是可以判断的。
+ *   从而实现了点击不同的区域，就相当于点击不同的按钮事件!
  **/
-        if (new RectF(minusBtnLeft, minusBtnTop, minusBtnRight, minusBtnBottom).contains(x, y))
-            Toast.makeText(mContext, "onClick minusButton!", Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(mContext, "onClick minusButton!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
-    public MPPointF getOffset() {
-        MPPointF mpPointF = new MPPointF();
-//        mpPointF.x = -getWidth()-offset;
-//        mpPointF.y = -getHeight();
-        mpPointF.x = -getWidth() / 2;
-        mpPointF.y = -getHeight();
-
-        return mpPointF;
+    public MPPointF getOffsetRight() {
+        return new MPPointF(-getWidth(), -getHeight());
     }
 
+    //    @Override
+//    public MPPointF getOffset() {
+//        MPPointF mpPointF = new MPPointF();
+//        mpPointF.x = -getWidth()/2;
+//        mpPointF.y = -getHeight();
+//
+//        return mpPointF;
+//    }
+//    @Override
+    public MPPointF getOffset() {
+        return new MPPointF(0, -getHeight());
+    }
 }

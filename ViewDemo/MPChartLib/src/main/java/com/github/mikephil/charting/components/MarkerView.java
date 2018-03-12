@@ -24,9 +24,9 @@ import java.lang.ref.WeakReference;
  */
 public abstract class MarkerView extends RelativeLayout implements IMarker {
     private MPPointF mOffset = new MPPointF();
-    private MPPointF mOffset2 = new MPPointF();
+    protected MPPointF mOffset2 = new MPPointF();
     private WeakReference<Chart> mWeakChart;
-    private MPPointF mpPointF = new MPPointF();
+    protected MPPointF mpPointF = new MPPointF();
 
     /**
      * relativeTouchPointX, relativeTouchPointY 是 touch 的点相对于 markerView 的 left, top 的坐标
@@ -44,6 +44,13 @@ public abstract class MarkerView extends RelativeLayout implements IMarker {
     public void setChartView(Chart chart) {
         mWeakChart = new WeakReference<>(chart);
     }
+    /*
+ 添加接口，解决MarkView显示问题
+  */
+    public MPPointF getOffsetRight() {
+        return mOffset;
+    }
+
     public float getRelativeTouchPointY() {
         return relativeTouchPointY;
     }
@@ -79,30 +86,6 @@ public abstract class MarkerView extends RelativeLayout implements IMarker {
     }
 
 
-    float mPosx, mPosy;
-
-    @Override
-    public boolean isTouch(MotionEvent event) {
-        if (mpPointF.x == 0)
-            return false;
-
-        float left = mpPointF.x - getWidth() / 2;
-        float top = mpPointF.y - getHeight();
-        float right = mpPointF.x + getWidth() / 2;
-        float bottom = mpPointF.y;
-
-        boolean touchInMarkerView = new RectF(left, top, right, bottom).contains(event.getX(), event.getY());
-
-        if (touchInMarkerView) {
-            setRelativeTouchPointX(event.getX() - left);
-            setRelativeTouchPointY(event.getY() - top);
-        }
-
-        mpPointF.x = 0;
-        mpPointF.y = 0;
-
-        return touchInMarkerView;
-    }
 
     /**
      * Draws the MarkerView on the given position on the screen with the given Canvas object.
@@ -146,24 +129,8 @@ public abstract class MarkerView extends RelativeLayout implements IMarker {
      */
     public abstract void refreshContent(Entry e, Highlight highlight);
 
-    /**
-     * Use this to return the desired offset you wish the MarkerView to have on the x-axis. By
-     * returning -(getWidth() /
-     * 2) you will center the MarkerView horizontally.
-     *
-     * @param xpos the position on the x-axis in pixels where the marker is drawn
-     */
 
 
-    /**
-     * Use this to return the desired position offset you wish the MarkerView to have on the
-     * y-axis.
-     * By returning
-     * -getHeight() you will cause the MarkerView to be above the selected value.
-     *
-     * @param ypos the position on the y-axis in pixels where the marker is drawn
-     */
-//    public abstract int getYOffset(float ypos);
 
 
     @Override
@@ -181,21 +148,32 @@ public abstract class MarkerView extends RelativeLayout implements IMarker {
         mOffset2.y = offset.y;
 
         Chart chart = getChartView();
-
-        float width = getWidth();
+//
+//        float width = getWidth();
         float height = getHeight();
-
-        if (posX + mOffset2.x < 0) {
-            mOffset2.x = -posX;
-        } else if (chart != null && posX + width + mOffset2.x > chart.getWidth()) {
-            mOffset2.x = chart.getWidth() - posX - width;
+//        //添加当点解右边往又显示
+//        if (chart != null && posX + width + mOffset2.x > chart.getWidth()) {
+//            offset = getOffsetRight();
+//            mOffset2.x = offset.x;
+//        }
+//        if (posX + mOffset2.x < 0) {
+//            mOffset2.x = -posX;
+//        } else if (chart != null && posX + width + mOffset2.x > chart.getWidth()) {
+//            mOffset2.x = chart.getWidth() - posX - width;
+//        }
+        if(posX>getChartView().getRight()/2){
+            //如果右边界超过chart右边界，设置MarkView固定于左上角
+            mOffset2.x=-getWidth();
+        }else if (posX<getChartView().getRight()/2){
+            mOffset2.x=0f;
         }
+        mOffset2.y=-posY+getChartView().getViewPortHandler().offsetTop();
 
-        if (posY + mOffset2.y < 0) {
-            mOffset2.y = -posY;
-        } else if (chart != null && posY + height + mOffset2.y > chart.getHeight()) {
-            mOffset2.y = chart.getHeight() - posY - height;
-        }
+//        if (posY + mOffset2.y < 0) {
+//            mOffset2.y = -posY;
+//        } else if (chart != null && posY + height + mOffset2.y > chart.getHeight()) {
+//            mOffset2.y = chart.getHeight() - posY - height;
+//        }
 
         return mOffset2;
     }

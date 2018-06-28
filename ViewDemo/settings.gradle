@@ -1,1 +1,1 @@
-include ':app', ':scrollviewactivity', ':MPChartLib'
+include ':app', ':scrollviewactivity', ':MPChartLib', ':glidedemo', ':zujianhuajiagou', ':androidshejimoshi', ':rxjava', ':desiginbehavior', ':gradledemo'

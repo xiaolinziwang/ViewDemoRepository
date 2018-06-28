@@ -1,0 +1,62 @@
+https://blog.csdn.net/guolin_blog/article/details/53939176
+load(Context mContext):
+   1.DrawableTypeRequest中含有asBitmap(),asGif();
+   2、load()在GenericRequestBuilder中定义的，error()\placeholder()\也在这个类中
+
+
+into():
+  DrawableRequestBuilder--->GenericRequestBuilder中的into(ImageView view){
+  1、判断是否主线程
+  2、view是否为空
+  3、 构建了一个Request request = this.buildRequest(target);，用来发出加载图片请求的，细分下来是：
+       0、 buildRequestRecursive是在处理缩率图
+      1、buildRequest(target)--->GenericRequest.init(plashholder....等等众多参数)，
+      2、图片加载在GenericRequest.begin(){
+       if(Util.isValidDimensions(this.overrideWidth, this.overrideHeight)) {
+                      this.onSizeReady(this.overrideWidth, this.overrideHeight);
+                  } else {
+                      this.target.getSize(this);
+                  }
+}
+     3、onSizeReady(){
+      ModelLoader<A, T> modelLoader = this.loadProvider.getModelLoader();
+      此刻，需要关注DrawableTypeRequest这个类：
+      1\ResourceTranscoder是用来图片转码的
+     }
+Glide缓存：
+     1、生成缓存Key的代码在Engine类的load()方法当中：
+     接下来在第12行，将这个id连同着signature、width、height等等10个参数一起传入到EngineKeyFactory的buildKey()方法当中，
+     从而构建出了一个EngineKey对象，这个EngineKey也就是Glide中的缓存Key了。
+     可见，决定缓存Key的条件非常多，即使你用override()方法改变了一下图片的width或者height，
+     也会生成一个完全不同的缓存Key。
+     EngineKey类的源码大家有兴趣可以自己去看一下，其实主要就是重写了equals()和hashCode()方法，
+     保证只有传入EngineKey的所有参数都相同的情况下才认为是同一个EngineKey对象，我就不在这里将源码贴出来了。
+
+
+      public <T, Z, R> Engine.LoadStatus load(Key...){
+      public <T, Z, R> Engine.LoadStatus load(Key signature, int width, int height, DataFetcher<T> fetcher, DataLoadProvider<T, Z> loadProvider, Transformation<Z> transformation,
+       ResourceTranscoder<Z, R> transcoder, Priority priority, boolean isMemoryCacheable, DiskCacheStrategy diskCacheStrategy, ResourceCallback cb) {
+              Util.assertMainThread();
+              long startTime = LogTime.getLogTime();
+              //这个是Url
+              String id = fetcher.getId();
+              EngineKey key = this.keyFactory.buildKey(id, signature, width, height, loadProvider.getCacheDecoder(), loadProvider.getSourceDecoder(), transformation, loadProvider.getEncoder(), transcoder, loadProvider.getSourceEncoder());
+              EngineResource<?> cached = this.loadFromCache(key, isMemoryCacheable);
+              if(cached != null) {
+                  cb.onResourceReady(cached);
+                  if(Log.isLoggable("Engine", 2)) {
+                      logWithTimeAndKey("Loaded resource from cache", startTime, key);
+                  }
+
+                  return null;
+              }
+      }
+由上可只：
+  key受这些因素影响：url,view的宽高、loadProvider.getCacheDecoder()，loadProvider.getSourceDecoder()、Transformation、loadProvider.getEncoder()、transcoder、Priority、
+   2、调用load()方法时，loadGeneric()中有loadGeneric()----》Glide.buildStreamModelLoader(modelClass, this.context)----》
+   buildModelLoader()---->get(Context)--->builder.createGlide()：LruResourceCache这个就是内存缓存对象，
+    3\取缓存的代码在Engine类中的load()：
+    Glide的图片加载过程中会调用两个方法来获取内存缓存，loadFromCache()和loadFromActiveResources();
+
+  }
+

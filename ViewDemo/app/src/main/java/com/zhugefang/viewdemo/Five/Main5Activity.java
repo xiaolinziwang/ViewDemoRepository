@@ -1,12 +1,9 @@
 package com.zhugefang.viewdemo.Five;
 
-import android.app.Notification;
 import android.app.NotificationManager;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
-
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import com.zhugefang.viewdemo.R;
 
 public class Main5Activity extends AppCompatActivity {

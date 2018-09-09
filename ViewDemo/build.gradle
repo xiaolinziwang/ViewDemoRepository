@@ -2,13 +2,22 @@
 
 buildscript {
     repositories {
-        jcenter()
-        google()
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        maven {
+            url 'https://dl.google.com/dl/android/maven2'
+        }
+        maven {
+            url "https://jitpack.io"
+        }
     }
     dependencies {
-        // classpath 'com.android.tools.build:gradle:2.2.2'
-          classpath 'com.android.tools.build:gradle:3.1.2'
-
+        apply from: "config.gradle"
+          classpath 'com.android.tools.build:gradle:3.1.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -16,8 +25,26 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
-        google()
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+        }
+        // 为了com.github.lzyzsd:jsbridge 和 BaseRecyclerViewAdapterHelper
+        maven {
+            url "https://jitpack.io"
+        }
+
+        maven {
+            url 'https://dl.google.com/dl/android/maven2'
+        }
+
+        //        google()
+//        mavenCentral()
+        maven {
+            url "http://maven.aliyun.com/nexus/content/repositories/releases"
+        }
     }
 }
 

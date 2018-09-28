@@ -13,8 +13,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/constraintlayout" />
             <option value="$PROJECT_DIR$/desiginbehavior" />
+            <option value="$PROJECT_DIR$/factory" />
             <option value="$PROJECT_DIR$/glidedemo" />
             <option value="$PROJECT_DIR$/gradledemo" />
+            <option value="$PROJECT_DIR$/gradlelib" />
             <option value="$PROJECT_DIR$/myapplication" />
             <option value="$PROJECT_DIR$/rxjava" />
             <option value="$PROJECT_DIR$/scrollviewactivity" />

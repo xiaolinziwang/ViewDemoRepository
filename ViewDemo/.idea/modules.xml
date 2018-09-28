@@ -8,8 +8,11 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/constraintlayout/constraintlayout.iml" filepath="$PROJECT_DIR$/constraintlayout/constraintlayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/desiginbehavior/desiginbehavior.iml" filepath="$PROJECT_DIR$/desiginbehavior/desiginbehavior.iml" />
+      <module fileurl="file://$PROJECT_DIR$/factory/factory.iml" filepath="$PROJECT_DIR$/factory/factory.iml" />
       <module fileurl="file://$PROJECT_DIR$/glidedemo/glidedemo.iml" filepath="$PROJECT_DIR$/glidedemo/glidedemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/gradledemo/gradledemo.iml" filepath="$PROJECT_DIR$/gradledemo/gradledemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gradlelib/gradlelib.iml" filepath="$PROJECT_DIR$/gradlelib/gradlelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjava/rxjava.iml" filepath="$PROJECT_DIR$/rxjava/rxjava.iml" />
       <module fileurl="file://$PROJECT_DIR$/scrollviewactivity/scrollviewactivity.iml" filepath="$PROJECT_DIR$/scrollviewactivity/scrollviewactivity.iml" />
       <module fileurl="file://$PROJECT_DIR$/zujianhuajiagou/zujianhuajiagou.iml" filepath="$PROJECT_DIR$/zujianhuajiagou/zujianhuajiagou.iml" />

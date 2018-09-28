@@ -6,18 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
+    <TextView
         android:id="@+id/A"
         android:textSize="18sp"
-        android:text="A"
-        app:layout_constraintHorizontal_bias="0.33"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"/>
+        android:gravity="center"
+        android:background="#aa9d9d"
+        android:text="比"
+        android:layout_width="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="H,2:1"
+        />
     <Button
         android:id="@+id/B"
         android:textSize="18sp"
         android:layout_width="0dp"
         android:text="B"
+        android:visibility="gone"
         app:layout_constraintCircleAngle="120"
         app:layout_constraintCircleRadius="220dp"
         app:layout_constraintCircle="@id/A"

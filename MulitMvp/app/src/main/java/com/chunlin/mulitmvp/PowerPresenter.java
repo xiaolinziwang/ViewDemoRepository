@@ -1,4 +1,4 @@
-package com.shuidihuzhu.mulitmvp;
+package com.chunlin.mulitmvp;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.shuidihuzhu.mulitmvp;
+package com.chunlin.mulitmvp;
 
 import org.junit.Test;
 

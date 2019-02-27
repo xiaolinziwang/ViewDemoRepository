@@ -1,4 +1,4 @@
-package com.shuidihuzhu.mulitmvp;
+package com.chunlin.mulitmvp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ public abstract class BaseMvpAct<T extends WrapperPresenter> extends AppCompatAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base_mvp);
+        setContentView(com.chunlin.mulitmvp.R.layout.activity_base_mvp);
         mPresenter = createP();
         if (mPresenter != null) {
             mPresenter.attachView(this);

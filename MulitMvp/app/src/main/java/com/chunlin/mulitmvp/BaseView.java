@@ -1,4 +1,4 @@
-package com.shuidihuzhu.mulitmvp;
+package com.chunlin.mulitmvp;
 
 /**
  * 项目名称：MulitMvp

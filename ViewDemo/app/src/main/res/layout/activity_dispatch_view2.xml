@@ -4,9 +4,9 @@
     android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zhugefang.viewdemo.Third.DispatchView2Activity">
+    tools:context="com.chunlin.viewdemo.Third.DispatchView2Activity">
 
-    <com.zhugefang.viewdemo.Third.widget.TextButton
+    <com.chunlin.viewdemo.Third.widget.TextButton
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

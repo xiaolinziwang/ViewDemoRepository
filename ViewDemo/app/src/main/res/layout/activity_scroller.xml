@@ -4,7 +4,7 @@
     android:id="@+id/activity_scroller"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zhugefang.viewdemo.Third.ScrollerActivity">
+    tools:context="com.chunlin.viewdemo.Third.ScrollerActivity">
 
     <LinearLayout
         android:id="@+id/layout"

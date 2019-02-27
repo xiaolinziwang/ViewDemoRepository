@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.zhugefang.viewdemo.MainActivity">
+    tools:context="com.chunlin.viewdemo.MainActivity">
 
     <ImageView
         android:id="@+id/iv_two"

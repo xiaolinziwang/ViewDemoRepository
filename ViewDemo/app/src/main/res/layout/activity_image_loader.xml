@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.zhugefang.viewdemo.Twelve.ImageLoaderActivity">
+    tools:context="com.chunlin.viewdemo.Twelve.ImageLoaderActivity">
 
     <GridView
         android:id="@+id/gridView1"

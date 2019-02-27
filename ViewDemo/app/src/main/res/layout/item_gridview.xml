@@ -5,10 +5,10 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.zhugefang.viewdemo.Twelve.SquareImageView
+    <com.chunlin.viewdemo.Twelve.SquareImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@mipmap/zhuge" />
+        android:src="@mipmap/chunlin" />
 </LinearLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhugefang.viewdemo.Third.widget.TextLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.chunlin.viewdemo.Third.widget.TextLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layout"
     android:layout_width="match_parent"
@@ -8,10 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.zhugefang.viewdemo.Third.DispatchActivity">
-    <com.zhugefang.viewdemo.Third.widget.TextButton
+    tools:context="com.chunlin.viewdemo.Third.DispatchActivity">
+    <com.chunlin.viewdemo.Third.widget.TextButton
         android:id="@+id/btn"
         android:layout_width="match_parent"
         android:text="hello word!"
         android:layout_height="wrap_content" />
-</com.zhugefang.viewdemo.Third.widget.TextLinearLayout>
+</com.chunlin.viewdemo.Third.widget.TextLinearLayout>

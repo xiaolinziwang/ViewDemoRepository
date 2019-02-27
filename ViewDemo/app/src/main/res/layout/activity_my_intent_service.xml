@@ -4,7 +4,7 @@
     android:id="@+id/activity_my_intent_service"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zhugefang.viewdemo.Eleven.MyIntentServiceActivity">
+    tools:context="com.chunlin.viewdemo.Eleven.MyIntentServiceActivity">
 
     <TextView
         android:id="@+id/tv"

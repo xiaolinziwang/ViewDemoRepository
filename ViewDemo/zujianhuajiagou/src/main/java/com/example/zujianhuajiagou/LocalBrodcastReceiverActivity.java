@@ -1,18 +1,23 @@
 package com.example.zujianhuajiagou;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 
 public class LocalBrodcastReceiverActivity extends AppCompatActivity {
-private String TAG="LocalBrodcastReceiverActivity";
+    private String TAG = "LocalBrodcastReceiverActivity";
     private LocalBroadcastManager mManager;
-    private BroadcastReceiver mReceiver;
+    private LocalBroadcastReceiver mReceiver;
+    private LocalBroadcastReceiver mReceiver1;
+
+
+    public static void startActivity(Context context) {
+        Intent intent = new Intent(context, LocalBrodcastReceiverActivity.class);
+        context.startActivity(intent);
+    }
 
 
     @Override
@@ -20,13 +25,9 @@ private String TAG="LocalBrodcastReceiverActivity";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_brodcast_receiver);
         mManager = LocalBroadcastManager.getInstance(this);
-        mReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.d(TAG, "onReceive: " + "I LOVE Wangchunlin");
-            }
-        };
-        mManager.registerReceiver(mReceiver,new IntentFilter("dongminglei"));
+        mReceiver = new LocalBroadcastReceiver();
+        mReceiver1 = new LocalBroadcastReceiver();
+        mManager.registerReceiver(mReceiver, new IntentFilter("dongminglei"));
     }
 
 

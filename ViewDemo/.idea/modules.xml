@@ -4,8 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/MPChartLib/MPChartLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/ViewDemo.iml" filepath="$PROJECT_DIR$/ViewDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/androiddevelopkillerclass/androiddevelopkillerclass.iml" filepath="$PROJECT_DIR$/androiddevelopkillerclass/androiddevelopkillerclass.iml" />
       <module fileurl="file://$PROJECT_DIR$/androidshejimoshi/androidshejimoshi.iml" filepath="$PROJECT_DIR$/androidshejimoshi/androidshejimoshi.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/calendar/calendar.iml" filepath="$PROJECT_DIR$/calendar/calendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/constraintlayout/constraintlayout.iml" filepath="$PROJECT_DIR$/constraintlayout/constraintlayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/desiginbehavior/desiginbehavior.iml" filepath="$PROJECT_DIR$/desiginbehavior/desiginbehavior.iml" />
       <module fileurl="file://$PROJECT_DIR$/factory/factory.iml" filepath="$PROJECT_DIR$/factory/factory.iml" />
@@ -15,7 +18,11 @@
       <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjava/rxjava.iml" filepath="$PROJECT_DIR$/rxjava/rxjava.iml" />
       <module fileurl="file://$PROJECT_DIR$/scrollviewactivity/scrollviewactivity.iml" filepath="$PROJECT_DIR$/scrollviewactivity/scrollviewactivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/zjhjglibrary/zjhjglibrary.iml" filepath="$PROJECT_DIR$/libraries/zjhjglibrary/zjhjglibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zjhjglibrary1/zjhjglibrary1.iml" filepath="$PROJECT_DIR$/zjhjglibrary1/zjhjglibrary1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zjhjglibrary12/zjhjglibrary12.iml" filepath="$PROJECT_DIR$/zjhjglibrary12/zjhjglibrary12.iml" />
       <module fileurl="file://$PROJECT_DIR$/zujianhuajiagou/zujianhuajiagou.iml" filepath="$PROJECT_DIR$/zujianhuajiagou/zujianhuajiagou.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zujianhuajiagou-beta/zujianhuajiagou-beta.iml" filepath="$PROJECT_DIR$/zujianhuajiagou-beta/zujianhuajiagou-beta.iml" />
     </modules>
   </component>
 </project>

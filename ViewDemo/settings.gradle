@@ -1,3 +1,3 @@
-include ':app', ':scrollviewactivity', ':MPChartLib', ':glidedemo', ':zujianhuajiagou', ':androidshejimoshi', ':rxjava', ':desiginbehavior', ':gradledemo', ':constraintlayout', ':myapplication', ':gradlelib', ':factory', ':androiddevelopkillerclass', ':calendar', ':zjhjglibrary1', ':zjhjglibrary12', ':zjhjglibrary12', ':base', ':zujianhuajiagou-beta'
+include ':app', ':scrollviewactivity', ':MPChartLib', ':glidedemo', ':zujianhuajiagou', ':androidshejimoshi', ':rxjava', ':desiginbehavior', ':gradledemo', ':constraintlayout', ':myapplication', ':gradlelib', ':factory', ':androiddevelopkillerclass', ':calendar', ':zjhjglibrary1', ':zjhjglibrary12', ':zjhjglibrary12', ':base', ':zujianhuajiagou-beta', ':basezjhjg'
 include ':zjhjglibrary'
 project(':zjhjglibrary').projectDir=new File(rootProject.projectDir,'./libraries/zjhjglibrary')

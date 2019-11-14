@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import com.example.basezjhjg.BaseAppInt;
+import com.example.zujianhuajiagou.dynaAPP.PageConfig;
 
 /**
  * 项目名称：ViewDemo
@@ -22,6 +24,7 @@ public class APP extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initModulesSpeed();
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -106,6 +109,19 @@ public class APP extends Application {
 
             }
         });
+    }
+
+
+    private void initModulesSpeed() {
+        for (String initModule : PageConfig.initModules) {
+            try {
+                Class<?> aClassc = Class.forName(initModule);
+                BaseAppInt baseAppInt = (BaseAppInt) aClassc.newInstance();
+                baseAppInt.onInitSpeed(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

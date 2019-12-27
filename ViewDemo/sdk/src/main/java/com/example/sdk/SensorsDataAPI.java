@@ -74,5 +74,24 @@ public class SensorsDataAPI {
             e.printStackTrace();
         }
     }
+
+    /**
+     *指定不采集哪个 Activity 的页面浏览事件
+     *
+     * @param activity Activity
+     */
+    public void ignoreAutoTrackActivity(Class<?> activity) {
+        SensorsDataPrivate.ignoreAutoTrackActivity(activity);
+    }
+
+    /**
+     * 恢复采集某个 Activity 的页面浏览事件
+     *
+     * @param activity Activity
+     */
+    public void removeIgnoredActivity(Class<?> activity) {
+        SensorsDataPrivate.removeIgnoredActivity(activity);
+    }
+
 }
 

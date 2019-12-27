@@ -41,7 +41,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class SensorsDataPrivate {
-    private static List<Integer> mIgnoredActivities;
+    private static List<String> mIgnoredActivities;
 
     static {
         mIgnoredActivities = new ArrayList<>();
@@ -55,7 +55,7 @@ public class SensorsDataPrivate {
             return;
         }
 
-        mIgnoredActivities.add(activity.hashCode());
+        mIgnoredActivities.add(activity.getCanonicalName());
     }
 
     public static void removeIgnoredActivity(Class<?> activity) {
@@ -63,8 +63,8 @@ public class SensorsDataPrivate {
             return;
         }
 
-        if (mIgnoredActivities.contains(activity.hashCode())) {
-            mIgnoredActivities.remove(activity.hashCode());
+        if (mIgnoredActivities.contains(activity.getCanonicalName())) {
+            mIgnoredActivities.remove(activity.getCanonicalName());
         }
     }
 
@@ -159,7 +159,7 @@ public class SensorsDataPrivate {
             if (activity == null) {
                 return;
             }
-            if (mIgnoredActivities.contains(activity.getClass().hashCode())) {
+            if (mIgnoredActivities.contains(activity.getClass().getCanonicalName())) {
                 return;
             }
             JSONObject properties = new JSONObject();

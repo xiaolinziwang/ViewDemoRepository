@@ -16,6 +16,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -27,7 +28,13 @@ import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -239,6 +246,8 @@ public class SensorsDataPrivate {
                     @Override
                     public void onActivityResumed(Activity activity) {
                         trackAppViewScreen(activity);
+                        ViewGroup rootView = activity.findViewById(android.R.id.content);
+                        delegateViewsOnClickListener(activity, rootView);
                     }
 
 
@@ -266,6 +275,80 @@ public class SensorsDataPrivate {
                     public void onActivityDestroyed(Activity activity) {
                     }
                 });
+    }
+    /**
+     * Delegate view mOnClickListener
+     *
+     * @param context Context
+     * @param view  View
+     */
+    @TargetApi(15)
+    private static void delegateViewsOnClickListener(final Context context, final View view) {
+        if (context == null || view == null) {
+            return;
+        }
+
+        //获取当前 view 设置的mOnClickListener
+        final View.OnClickListener listener = getOnClickListener(view);
+
+        //判断已设置的mOnClickListener 类型, 如果是自定义的 WrapperOnClickListener, 说明已
+        //经被代理过, 不要再去代理, 防止重复代理
+        if (listener != null &&!(listener instanceof WrapperOnClickListener)) {
+            //替换成自定义的 WrapperOnClickListener
+            view.setOnClickListener(new WrapperOnClickListener(listener));
+        }
+
+        //如果 view 是 ViewGroup, 需要递归遍历子 View 并代理
+        if (view instanceof ViewGroup) {
+            final ViewGroup viewGroup = (ViewGroup) view;
+            int childCount = viewGroup.getChildCount();
+            if (childCount > 0) {
+                for (int i = 0; i < childCount; i++) {
+                    View childView = viewGroup.getChildAt(i);
+                    //递归
+                    delegateViewsOnClickListener(context, childView);
+                }
+            }
+        }
+    }
+
+    /**
+     * 获取 View 当前设置的 OnClickListener对象
+     *
+     * @param view View
+     * @return View.OnClickListener
+     */
+    @SuppressWarnings({"all"})
+    @TargetApi(15)
+    private static View.OnClickListener getOnClickListener(View view) {
+        boolean hasOnClick = view.hasOnClickListeners();
+        if (hasOnClick) {
+            try {
+                Class viewClazz = Class.forName("android.view.View");
+                Method listenerInfoMethod = viewClazz.getDeclaredMethod("getListenerInfo");
+                if (!listenerInfoMethod.isAccessible()) {
+                    listenerInfoMethod.setAccessible(true);
+                }
+                Object listenerInfoObj = listenerInfoMethod.invoke(view);
+                Class listenerInfoClazz = Class.forName("android.view.View$ListenerInfo");
+                Field onClickListenerField = listenerInfoClazz.getDeclaredField("mOnClickListener");
+                if (!onClickListenerField.isAccessible()) {
+                    onClickListenerField.setAccessible(true);
+                }
+                return (View.OnClickListener) onClickListenerField.get(listenerInfoObj);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
 
@@ -429,5 +512,96 @@ public class SensorsDataPrivate {
             return "";
         }
     }
+
+    /**
+     * View 被点击, 自动埋点
+     *
+     * @param view View
+     */
+    @Keep
+    protected static void trackViewOnClick(View view) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("$element_type", view.getClass().getCanonicalName());
+            jsonObject.put("$element_id", SensorsDataPrivate.getViewId(view));
+            jsonObject.put("$element_content", SensorsDataPrivate.getElementContent(view));
+            Activity activity = SensorsDataPrivate.getActivityFromView(view);
+            if (activity != null) {
+                jsonObject.put("$activity", activity.getClass().getCanonicalName());
+            }
+
+            SensorsDataAPI.getInstance().track("$AppClick", jsonObject);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 获取 view 的 android:id 属性对应的字符串
+     *
+     * @param view View
+     * @return String
+     */
+    private static String getViewId(View view) {
+        String idString = null;
+        try {
+            if (view.getId() != View.NO_ID) {
+                idString = view.getContext().getResources().getResourceEntryName (view.getId());
+            }
+        } catch (Exception e) {
+            //ignore
+        }
+        return idString;
+    }
+    /**
+     * 获取 View 上显示的文本
+     *
+     * @param view View
+     * @return String
+     */
+    private static String getElementContent(View view) {
+        if (view == null) {
+            return null;
+        }
+
+        String text = null;
+        if (view instanceof Button) {
+            text = ((Button) view).getText().toString();
+        }
+        return text;
+    }
+    /**
+     * 获取 View 所属的 Activity
+     *
+     * @param view View
+     * @return Activity
+     */
+    private static Activity getActivityFromView(View view) {
+        Activity activity = null;
+        if (view == null) {
+            return null;
+        }
+
+        try {
+            Context context = view.getContext();
+            if (context != null) {
+                if (context instanceof Activity) {
+                    activity = (Activity) context;
+                } else if (context instanceof ContextWrapper) {
+                    while (!(context instanceof Activity) && context instanceof ContextWrapper) {
+                        context = ((ContextWrapper) context).getBaseContext();
+                    }
+                    if (context instanceof Activity) {
+                        activity = (Activity) context;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return activity;
+    }
+
+
+
 }
 

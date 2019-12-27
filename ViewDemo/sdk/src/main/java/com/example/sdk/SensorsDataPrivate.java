@@ -21,15 +21,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.support.annotation.Keep;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,16 +37,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SensorsDataPrivate {
     private static List<String> mIgnoredActivities;
+    private static final SimpleDateFormat mDateFormat = new SimpleDateFormat(
+            "yyyy-MM-dd HH:mm:ss" + ".SSS", Locale.CHINA);
+    private static SensorsDatabaseHelper mDatabaseHelper;
+    private static CountDownTimer countDownTimer;
+    private static WeakReference<Activity> mCurrentActivity;
+    private final static int SESSION_INTERVAL_TIME = 30 * 1000;
+
 
     static {
         mIgnoredActivities = new ArrayList<>();
     }
 
-    private static final SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"
-            + ".SSS", Locale.CHINA);
 
     public static void ignoreAutoTrackActivity(Class<?> activity) {
         if (activity == null) {
@@ -57,6 +62,7 @@ public class SensorsDataPrivate {
 
         mIgnoredActivities.add(activity.getCanonicalName());
     }
+
 
     public static void removeIgnoredActivity(Class<?> activity) {
         if (activity == null) {
@@ -68,8 +74,8 @@ public class SensorsDataPrivate {
         }
     }
 
-    public static void mergeJSONObject(final JSONObject source, JSONObject dest)
-            throws JSONException {
+
+    public static void mergeJSONObject(final JSONObject source, JSONObject dest) throws JSONException {
         Iterator<String> superPropertiesIterator = source.keys();
         while (superPropertiesIterator.hasNext()) {
             String key = superPropertiesIterator.next();
@@ -84,6 +90,7 @@ public class SensorsDataPrivate {
         }
     }
 
+
     @TargetApi(11)
     private static String getToolbarTitle(Activity activity) {
         try {
@@ -95,7 +102,8 @@ public class SensorsDataPrivate {
             } else {
                 if (activity instanceof AppCompatActivity) {
                     AppCompatActivity appCompatActivity = (AppCompatActivity) activity;
-                    android.support.v7.app.ActionBar supportActionBar =appCompatActivity.getSupportActionBar();
+                    android.support.v7.app.ActionBar supportActionBar = appCompatActivity
+                            .getSupportActionBar();
                     if (supportActionBar != null) {
                         if (!TextUtils.isEmpty(supportActionBar.getTitle())) {
                             return supportActionBar.getTitle().toString();
@@ -108,6 +116,7 @@ public class SensorsDataPrivate {
         }
         return null;
     }
+
 
     /**
      * 获取 Activity 的 title
@@ -136,7 +145,8 @@ public class SensorsDataPrivate {
             if (TextUtils.isEmpty(activityTitle)) {
                 PackageManager packageManager = activity.getPackageManager();
                 if (packageManager != null) {
-                    ActivityInfo activityInfo = packageManager.getActivityInfo (activity.getComponentName(), 0);
+                    ActivityInfo activityInfo = packageManager
+                            .getActivityInfo(activity.getComponentName(), 0);
                     if (activityInfo != null) {
                         activityTitle = activityInfo.loadLabel(packageManager).toString();
                     }
@@ -147,6 +157,7 @@ public class SensorsDataPrivate {
         }
         return activityTitle;
     }
+
 
     /**
      * Track 页面浏览事件
@@ -171,6 +182,7 @@ public class SensorsDataPrivate {
         }
     }
 
+
     /**
      * 注册 Application.ActivityLifecycleCallbacks
      *
@@ -178,43 +190,122 @@ public class SensorsDataPrivate {
      */
     @TargetApi(14)
     public static void registerActivityLifecycleCallbacks(Application application) {
-        application.registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+        mDatabaseHelper = new SensorsDatabaseHelper(application.getApplicationContext(), application
+                .getPackageName());
+        countDownTimer = new CountDownTimer(SESSION_INTERVAL_TIME, 10 * 1000) {
             @Override
-            public void onActivityCreated(Activity activity, Bundle bundle) {
+            public void onTick(long l) {
 
             }
 
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
 
             @Override
-            public void onActivityResumed(Activity activity) {
-                trackAppViewScreen(activity);
+            public void onFinish() {
+                trackAppEnd(mCurrentActivity.get());
             }
+        };
 
-            @Override
-            public void onActivityPaused(Activity activity) {
+        application
+                .registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+                    @Override
+                    public void onActivityCreated(Activity activity, Bundle bundle) {
+                    }
 
-            }
 
-            @Override
-            public void onActivityStopped(Activity activity) {
+                    @Override
+                    public void onActivityStarted(Activity activity) {
+                        //这样之前注册的ContentObserver就能收到通知并取消掉CountDownTimer计时器
+                        mDatabaseHelper.commitAppStart(true);
+                        //然后判断一下当前页面与上个页面退出时间的间隔是否超出了30s，如果超出了30s，
+                        // 并且没有触发过$AppEnd事件（应用程序发生崩溃或者应用程序被强杀等场景），
+                        // 则补发$AppEnd事件
+                        //如果触发了$AppEnd事件，说明是一个新的Session开始了，需要触发$AppStart事件。
+                        double timeDiff = System.currentTimeMillis() -
+                                mDatabaseHelper.getAppPausedTime();
+                        if (timeDiff > 30 * 1000) {
+                            if (!mDatabaseHelper.getAppEndEventState()) {
+                                trackAppEnd(activity);
+                            }
+                        }
 
-            }
+                        if (mDatabaseHelper.getAppEndEventState()) {
+                            mDatabaseHelper.commitAppEndEventState(false);
+                            trackAppStart(activity);
+                        }
+                    }
 
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
 
-            }
+                    //会直接触发$AppViewScreen页面浏览事件。
+                    @Override
+                    public void onActivityResumed(Activity activity) {
+                        trackAppViewScreen(activity);
+                    }
 
-            @Override
-            public void onActivityDestroyed(Activity activity) {
 
-            }
-        });
+                    //启动CountDownTimer计时器，并且保存当前页面退出时的时间戳。
+                    @Override
+                    public void onActivityPaused(Activity activity) {
+                        mCurrentActivity = new WeakReference<>(activity);
+                        countDownTimer.start();
+                        mDatabaseHelper.commitAppPausedTime(System.currentTimeMillis());
+                    }
+
+
+                    @Override
+                    public void onActivityStopped(Activity activity) {
+                    }
+
+
+                    @Override
+                    public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+
+                    }
+
+
+                    @Override
+                    public void onActivityDestroyed(Activity activity) {
+                    }
+                });
     }
+
+
+    /**
+     * Track $AppStart 事件
+     */
+    private static void trackAppStart(Activity activity) {
+        try {
+            if (activity == null) {
+                return;
+            }
+            JSONObject properties = new JSONObject();
+            properties.put("$activity", activity.getClass().getCanonicalName());
+            properties.put("$title", getActivityTitle(activity));
+            SensorsDataAPI.getInstance().track("$AppStart", properties);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Track $AppEnd 事件
+     */
+    private static void trackAppEnd(Activity activity) {
+        try {
+            if (activity == null) {
+                return;
+            }
+            JSONObject properties = new JSONObject();
+            properties.put("$activity", activity.getClass().getCanonicalName());
+            properties.put("$title", getActivityTitle(activity));
+            SensorsDataAPI.getInstance().track("$AppEnd", properties);
+            mDatabaseHelper.commitAppEndEventState(true);
+            mCurrentActivity = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static Map<String, Object> getDeviceInfo(Context context) {
         final Map<String, Object> deviceInfo = new HashMap<>();
@@ -224,8 +315,8 @@ public class SensorsDataPrivate {
             deviceInfo.put("$os", "Android");
             deviceInfo.put("$os_version",
                     Build.VERSION.RELEASE == null ? "UNKNOWN" : Build.VERSION.RELEASE);
-            deviceInfo
-                    .put("$manufacturer", Build.MANUFACTURER == null ? "UNKNOWN": Build.MANUFACTURER);
+            deviceInfo.put("$manufacturer",
+                    Build.MANUFACTURER == null ? "UNKNOWN" : Build.MANUFACTURER);
             if (TextUtils.isEmpty(Build.MODEL)) {
                 deviceInfo.put("$model", "UNKNOWN");
             } else {
@@ -251,6 +342,7 @@ public class SensorsDataPrivate {
         }
     }
 
+
     /**
      * 获取 Android ID
      *
@@ -261,12 +353,14 @@ public class SensorsDataPrivate {
     public static String getAndroidID(Context mContext) {
         String androidID = "";
         try {
-            androidID = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+            androidID = Settings.Secure
+                    .getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return androidID;
     }
+
 
     private static void addIndentBlank(StringBuilder sb, int indent) {
         try {
@@ -277,6 +371,7 @@ public class SensorsDataPrivate {
             e.printStackTrace();
         }
     }
+
 
     public static String formatJson(String jsonStr) {
         try {

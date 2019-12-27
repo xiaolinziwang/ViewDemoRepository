@@ -3,6 +3,7 @@
     package="com.example.buriedpoint">
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -10,7 +11,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Main2Activity"></activity>
+        <activity
+            android:name=".Main2Activity"
+            android:label="home2-manifest"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

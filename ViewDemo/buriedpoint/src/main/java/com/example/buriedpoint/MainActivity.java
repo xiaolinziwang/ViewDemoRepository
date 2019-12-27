@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
                 Main2Activity.startActivity(MainActivity.this);
             }
         });
-        setTitle("Home");
+        //setTitle("Home");
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) ==
                 PackageManager.PERMISSION_GRANTED) {

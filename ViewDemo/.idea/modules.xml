@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/aroutertest/aroutertest.iml" filepath="$PROJECT_DIR$/aroutertest/aroutertest.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
       <module fileurl="file://$PROJECT_DIR$/basezjhjg/basezjhjg.iml" filepath="$PROJECT_DIR$/basezjhjg/basezjhjg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/buriedpoint/buriedpoint.iml" filepath="$PROJECT_DIR$/buriedpoint/buriedpoint.iml" />
       <module fileurl="file://$PROJECT_DIR$/calendar/calendar.iml" filepath="$PROJECT_DIR$/calendar/calendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/constraintlayout/constraintlayout.iml" filepath="$PROJECT_DIR$/constraintlayout/constraintlayout.iml" />
       <module fileurl="file://$PROJECT_DIR$/desiginbehavior/desiginbehavior.iml" filepath="$PROJECT_DIR$/desiginbehavior/desiginbehavior.iml" />
@@ -20,6 +21,7 @@
       <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/rxjava/rxjava.iml" filepath="$PROJECT_DIR$/rxjava/rxjava.iml" />
       <module fileurl="file://$PROJECT_DIR$/scrollviewactivity/scrollviewactivity.iml" filepath="$PROJECT_DIR$/scrollviewactivity/scrollviewactivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sdk/sdk.iml" filepath="$PROJECT_DIR$/sdk/sdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/zidingyikongjiankaifa/zidingyikongjiankaifa.iml" filepath="$PROJECT_DIR$/zidingyikongjiankaifa/zidingyikongjiankaifa.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/zjhjglibrary/zjhjglibrary.iml" filepath="$PROJECT_DIR$/libraries/zjhjglibrary/zjhjglibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/zjhjglibrary1/zjhjglibrary1.iml" filepath="$PROJECT_DIR$/zjhjglibrary1/zjhjglibrary1.iml" />

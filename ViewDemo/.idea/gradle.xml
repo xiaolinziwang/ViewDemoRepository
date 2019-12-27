@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/aroutertest" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/basezjhjg" />
+            <option value="$PROJECT_DIR$/buriedpoint" />
             <option value="$PROJECT_DIR$/calendar" />
             <option value="$PROJECT_DIR$/constraintlayout" />
             <option value="$PROJECT_DIR$/desiginbehavior" />
@@ -26,6 +27,7 @@
             <option value="$PROJECT_DIR$/myapplication" />
             <option value="$PROJECT_DIR$/rxjava" />
             <option value="$PROJECT_DIR$/scrollviewactivity" />
+            <option value="$PROJECT_DIR$/sdk" />
             <option value="$PROJECT_DIR$/zidingyikongjiankaifa" />
             <option value="$PROJECT_DIR$/zjhjglibrary1" />
             <option value="$PROJECT_DIR$/zjhjglibrary12" />
@@ -34,7 +36,6 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>
